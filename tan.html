@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="icon.png" rel="shortcut icon" type="image/x-icon" />
+		<link href="css.css" rel="stylesheet"/>
+    </head>
+    <body>
+    	<div class="" id="box" style="width:700px;height:500px;border:1px solid #000;margin:0 auto;">
+        	<span id="ball" class="ball" style="position:relative;display:block;width:40px;height:40px;border-radius:20px;border:1px solid red;background:red;"></span>
+        </div>
+    </body>
+<script type="text/javascript">
+    window.onload = function(){
+        //启动器
+        moveBall('50','50');
+    }
+
+    //获取框框的位置
+    function getBoxPosition(lr){
+        var box = document.getElementById('box');
+        var bx = box.offsetLeft;
+        var by = box.offsetTop;
+        if (lr=='x') {
+            return bx;
+        }else{
+            return by;
+        }
+    }
+
+    //获取球心的位置 x
+    function getPositionX(){
+        var b = document.getElementById('ball');
+        var boxx = getBoxPosition('x');
+        var x = b.offsetLeft - boxx-1;
+        return x;
+    }
+
+    //获取球心的位置 y
+    function getPositionY(){
+        var b = document.getElementById('ball');
+        var boxy = getBoxPosition('y');
+        var y = b.offsetTop - boxy-1;
+        return y;
+    }
+
+    //根据参数移动小球
+    function moveBall(x,y){
+        var b = document.getElementById('ball');
+        var nowx = getPositionX();
+        var nowy = getPositionY();
+        for (var i = 1; i <= x; i++) {
+            b.style.left = nowx + i + "px";
+        };
+        for (var j = 1; j <= y; j++) {
+            b.style.top = nowy + j + "px";
+        };
+    }
+
+
+</script>
+</html>
