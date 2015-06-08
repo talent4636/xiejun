@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery Dom</title>
+    <style>
+        .box{width: 300px;}
+        .box li{  color: white;border-radius: 3px;border: 1px solid #00A000;
+            background: #0e84b5;list-style: none;margin: 5px;float: left;}
+
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <input type="text" id="address" value="请输入邮箱地址" />
+        <input type="text" id="password" value="请输入邮箱密码" />
+        <input type="button" value="登陆" />
+    </div>
+<script>
+    $(document).ready(function(){
+        //笨办法
+//        $("#address").focus(function(){
+//            var text_value = $(this).val();
+//            if(text_value == "请输入邮箱地址"){
+//                $(this).val("");
+//            }
+//        });
+//        $("#address").blur(function(){
+//            var text_value = $(this).val();
+//            if(text_value == ""){
+//                $(this).val("请输入邮箱地址");
+//            }
+//        });
+
+        //用defaultValue属性
+        $("#address").focus(function(){
+            var text_value = $(this).val();
+            if(text_value == this.defaultValue){
+                $(this).val("");
+            }
+        });
+        $("#address").blur(function(){
+            var text_value = $(this).val();
+            if(text_value == ""){
+                $(this).val(this.defaultValue);
+            }
+        });
+    });
+</script>
+</body>
+</html>

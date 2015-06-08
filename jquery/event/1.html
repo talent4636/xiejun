@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery Event</title>
+    <style>
+        .highlight{ background: #FF3300; }
+    </style>
+</head>
+<body>
+    <div id="panel">
+        <h5 class="head">什么是jQuery?</h5>
+        <div class="content">
+            jQuery是什么什么一大堆东西，哈哈哈哈哈。jQuery是什么什么一大堆东西，哈哈哈哈哈。
+            jQuery是什么什么一大堆东西，哈哈哈哈哈。jQuery是什么什么一大堆东西，哈哈哈哈哈。
+            jQuery是什么什么一大堆东西，哈哈哈哈哈。jQuery是什么什么一大堆东西，哈哈哈哈哈。
+        </div>
+    </div>
+<script>
+    $(function(){
+        //未加强效果
+//        $("#panel h5.head").bind("click",function(){
+//            if($(this).next().is(":visible")){
+//                $(this).next().hide();
+//            }else{
+//                $(this).next().show();
+//            }
+//        });
+
+        //加强效果
+//        $("#panel h5.head").bind("click",function(){
+//            var $content = $(this).next();
+//            if($content.is(":visible")){
+//                $content.hide();
+//            }else{
+//                $content.show();
+//            }
+//        });
+
+        //合成效果
+//        $("#panel h5.head").hover(function(){
+//            $(this).next().show();
+//        },function(){
+//            $(this).next().hide();
+//        });
+
+        //toggle
+//        $("#panel h5.head").toggle(function(){
+//            $(this).next().show();
+//        },function(){
+//            $(this).next().hide();
+//        });
+
+        //toggle，还可以这样
+//        $("#panel h5.head").click(function(){
+//            $(this).next().toggle();
+//        });
+
+        //再次加强效果
+        $("#panel h5.head").toggle(function(){
+            $(this).addClass("highlight");
+            $(this).next().show();
+        },function(){
+            $(this).removeClass("highlight");
+            $(this).next().hide();
+        });
+
+    });
+</script>
+</body>
+</html>

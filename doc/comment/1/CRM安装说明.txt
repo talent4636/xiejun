@@ -1,0 +1,326 @@
+SHOPEX CRM 独立部署版
+
+安装部署手册
+																	
+版本	修改日期	修改人	备注
+1.0	2013.12.1	石尧	
+1.1	2014.3.20	石尧	
+1.2	2014.5.10	石尧	
+1.2	2014.7.7	石尧	增加实际部署时候可能会遇到的问题
+1.2	2014.7.31	石尧	增加jdk 1.7.0_55，服务器软件版本以上去掉
+1.2	2014.08.12	王建华	增加java端授权码配置说明
+1.2	2014.11.14	叶伟	增加注意事项
+1.2	2014.08.12	王建华	因java部署目录变更，修改安装说明。
+
+
+目录
+1、ShopEx CRM服务器和安装环境	3
+1.1、服务器优化方案要求：	3
+1.2、操作系统要求	4
+1.3、数据库要求	4
+1.4、web运行服务环境	4
+1.5、其他软件要求	4
+2、ShopEx CRM Web端部署方式	4
+2.1、使用IE浏览器安装	4
+2.2、windows下命令行安装	5
+2.3、linux下命令安装	5
+3、Web配置参数说明	5
+3.1、项目目录说明	5
+3.2、安装成功	6
+3.3、任务配置文件	6
+4、Web服务计划执行脚本说明	7
+5 独立部署web系统运行解密方式	8
+5.1、安装Zend Guard	8
+5.2、运行解密步骤	8
+6、内存服务器安装配置	9
+6.1、	安装jdk	9
+1）、下载jdk	9
+2）、解压jdk	9
+3）、配置环境变量	10
+4）、检查环境变量	10
+5）、测试	10
+6.2、	获取校验码	11
+6.3、安装harmonizes	11
+6.4安装maestro	14
+6.5、安装backstage	16
+7、实际部署安装注意事项	18
+7.1 域名解析DNS设置	18
+服务器DNS 要检查是否有域名拼不通，涉及短信接口,旺旺精灵接口。 api.sms.shopex.cn webapi.sms.shopex.cn	18
+7.2 开启防火墙端口	18
+7.3 确认服务器跟矩阵请求和响应是否正常	19
+如有问题可以联系：	19
+
+
+
+
+
+
+
+
+
+
+
+
+1、ShopEx CRM服务器和安装环境
+1.1、服务器优化方案要求：
+WEB服务器：
+CPU  E5-2609*2 内存16G 硬盘300G*2 （RAID 1) 
+数据库服务器：
+MYSQL：CPU：E5-2630*2 内存32G 硬盘600G*4 （RAID10）
+内存服务器：
+CPU：E5-2630*2  内存64G 硬盘300G*2（RAID1）
+	1.2、操作系统要求
+		RedHat 5.5
+	1.3、数据库要求
+		Mysql 5.0 (必须运行在非严格模式)
+	1.4、web运行服务环境
+		Nginx 1.2.9 
+	1.5、其他软件要求
+		PHP 5.3.10
+		Redis 2.0 
+	   jdk 1.7.0_55
+2、ShopEx CRM Web端部署方式
+	2.1、使用IE浏览器安装
+访问软件目录/index.php根据向导安装即可
+	2.2、windows下命令行安装
+		进入app/base目录下  
+安装app:  cmd install  appname
+ 
+查看已安装的app
+ 
+
+	2.3、linux下命令安装
+		/usr/local/php/bin/php  app/base/cmd install appname
+		其他命令同上
+
+
+
+3、Web配置参数说明
+	3.1、项目目录说明
+		app			存放所有的app应用
+		config			主要存放配置信息
+		data				存放缓存信息
+		script				计划任务及一些常用的脚本
+3.2、安装成功
+Config目录下会生成config.php文件，需填写参数如下：
+DB_USER			数据库用户名
+DB_PASSWORD	数据库密码
+DB_NAME		数据库名
+DB_HOST	数据库服务器(IP:端口号)
+REDIS_HOST		redis服务器地址
+REDIS_PORT	redis服务器端口号
+MEMO_SERVICE_URL	内存服务器IP
+
+3.3、任务配置文件
+修改 script/config/config.sample.php 文件为：
+script/config/config.php
+【注意，不是根目录下的config】
+除了下面列表中的三项以外，还要注意如下图中绿线标出的几行，要根据实际项目目录的情况修改，-_-\\
+ 
+参数	说明
+S_REDIS_HOST	redis服务器地址
+S_REDIS_PORT		redis服务器端口号
+S_PHP_EXEC	PHP执行路径
+
+4、Web服务计划执行脚本说明
+	4.1、script/crontab_day.sh（*更新项目地址）
+每天执行一次，例如：
+1）	获取淘宝退款订单。		
+2）	统计商品销售数据。
+3）	统计店铺销售数据。
+
+	4.2、script/crontab_hour.sh				（*更新项目地址）
+每小时执行一次,执行CRM系统插件任务，例如：
+1）	关怀插件，确认收货三天后的买家，发送关怀短信。
+2）	订单催付，超过指定时间仍未付款的订单，给买家发送提醒短信。
+3）	发货提醒，订单发货后发送短信给买家，提醒买家收货。
+		
+	4.3、script/crontab.sh				（*更新项目地址）
+   	每分执行一次，例如：
+1）	订单队列处理，对进入Redis的订单进行处理。
+2）	后台队列处理，外部客户导入等处理。
+注意：所有这些sh脚本中的包含的文件，如果没有的可以mv一个出来，里面的常量根据实际情况配置（如：PHP_BIN_VAL的值要替换成/usr/local/webserver/php/bin/php；CRM_DIR_VAL要替换成/data/www/crm！！！）
+
+5 独立部署web系统运行解密方式
+5.1、安装Zend Guard
+版本要求(linux)： Zend Guard Loader(Runtime for PHP 5.3) 5.5.0 (64bit)
+配置php.ini
+[Zend Guard]
+zend_extension=/usr/local/webserver/php/ext/ZendGuardLoader.so
+zend_loader.enable=1
+zend_loader.disable_licensing=0
+zend_loader.obfuscation_level_support=3
+zend_loader.license_path=授权证书路径
+5.2、运行解密步骤
+1）、生成机器码
+运行hardware.php，获取目标服务器机器码。并把机器码给返回ShopEx CRM产品组。
+2）、SHopEx CRM获取机器码后生成授权文件(*.zl) 
+	客户获得文件后，放入linux服务器的/home/www文件夹下。
+3）、配置服务器Zend Guard Load
+到http://www.zend.com,根据php版本找到相应Zend Guard Load版本，目前系统使用php版本5.3.10，Zend Guard Loader(Runtime for PHP 5.3) 5.5.0 (64bit)，下载后并安装。
+4）、配置php.ini
+在php.ini文件最下面添加以下内容
+[Zend Guard]
+zend_extension=/usr/local/webserver/php/ext/ZendGuardLoader.so
+zend_loader.enable=1
+zend_loader.disable_licensing=0
+zend_loader.obfuscation_level_support=3
+zend_loader.license_path=授权证书路径(*.zl的文件路径)
+
+5）、重启nginx 和 php-fpm
+php-fpm 重启：
+如：kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
+
+6、内存服务器安装配置
+6.1、 配置Java环境
+1）、下载JDK
+下载JDK 7以上版本（这里以jdk-7u71-linux-x64.tar.gz为例），推荐从Oracle官网（下载连接）上下载。如下图所示:
+ 
+
+2）、解压JDK
+这里以CentOS x64环境，jdk-7u71-linux-x64.tar.gz下载后放到/root/${user}目录下为例。
+在/root/${user}目录下执行
+tar -xvzf jdk-7u71-linux-x64.tar.gz -C /usr/local
+(该命令把jdk-7u71-linux-x64.tar.gz解压并移动到/usr/local目录下)
+3）、配置环境变量
+编辑/etc/profile文件，在文件末添加如下代码。
+export JAVA_HOME=/usr/local/jdk1.7.0_71
+export PATH=$JAVA_HOME/bin:$PATH
+保存后退出。
+执行 source /ect/profile使配置生效。
+4）、测试
+执行 java –version
+屏幕输出如下字样就说明安装成功
+java version "1.7.0_71"
+Java(TM) SE Runtime Environment (build 1.7.0_71)
+6.2、  获取校验码
+1）、获取内存服务器MAC地址
+在Linux环境下使用ifconfig eth0命令，查看并记录HWaddr对应的值，该值即是内存服务器MAC地址。
+2）、生成校验码
+	将内存服务器MAC地址发送到SHOPEX_CRM供货商，用来获取校验码。
+（注：分布式部署时，请提供每一台内存服务器的MAC地址）
+
+6.3、安装java中间件
+注意：任何地方的authorization_code都是填入激活码，并且不能忘了将本CRM的节点号加入矩阵白名单！！！！
+ShopexCRM 的java中间件middelware分为bizserver，backstage，sddc三部分；logs为日志目录。middelware解压后示例如下：
+ 
+图（一）
+以下分别介绍这三部分的配置：
+6.3.1、安装bizserver
+1）、安装bizserver
+把bizserver放到指定目录下，比如/usr/local/middleware目录下，即完成了bizserver的安装。
+2）、配置参数
+➢	配置bizserver/conf/biz.properties
+authorization_code= xxxxxxxx
+请在authorization_code键下对应填入该台内存服务器的校验码，并保存退出即可。
+➢	配置bizserver/conf/harmonizes.properties
+默认情况下该文件显示如下：
+#route config
+http_port=80
+route_port=10001
+route_request_module=0x10000030
+mac_address_getter=ifconfig eth0
+	（注：若http_port对应的80端口已经被占用，请根据实际情况修改 ）
+➢	配置bizserver/conf/maestroes.xml
+默认情况下该文件显示如下
+<?xml version="1.0" encoding="gb2312"?>
+<maestroes>
+<maestro id="0">
+<ip>XXX.XXX.XXX.XXX</ip>
+<routeModule>0x10000030</routeModule>
+</maestro>
+</maestroes>
+请将<ip>标签下对应的值更新为该内存服务器的IP地址，并保存退出即可。
+➢	配置bizserver/conf/maestro.properties
+默认情况下该文件显示如下：
+#command route config
+route_ip=192.168.14.55
+route_port=10001
+#username password
+route_username=lvbs
+route_password=lvbs
+route_request_module=0x10000030
+route_service_module=0x10000001
+#connect route or not when needing self testing
+is_connect_route=true
+#max thread num for thread pool
+max_thread_num=25
+h2_port=8082
+mac_address_getter=ifconfig eth0
+data_export_path=/tmp/maestro
+combiner_url=http://127.0.0.1:7878
+sddc_url=http://127.0.0.1:8787
+
+➢	启动
+在bizserver目录下， 执行nohup ./bizserver.sh &进行启动。
+6.3.2、安装backstage
+1）、安装backstage
+把backstage放到指定目录下，比如/usr/local/middleware目录下，就完成了backstage的安装。
+2）、配置参数
+➢	backstage/conf/backstage.properties
+默认情况下该文件显示如下：
+backstage_port=7878
+h2_backup_port=8083
+h2_backup_path=data/backup
+combiner_thread_count=5
+combiner_thread_priority=2
+combiner_queue_capacity=500
+combiner_final_fields=weixin,qq,weibo,wangwang,member_id,parent_member_id,is_merger,mobile,email,uname,name,area,state,city,district,addr,tel,zip,alipay_account,alipay_no,birthday,sex,remark,is_vip,sms_blacklist,edm_blacklist
+mac_address_getter=ifconfig eth0
+member_rank_cron=0 0 0 */1 * ?
+member_tag_cron=0 0 1 */1 * ?
+crm_index_cron=0 33 6 * * ?
+active_order_cron=0 0 3 * * ?
+jdbc.dbhost=127.0.0.1
+jdbc.dbport=3306
+jdbc.dbname=webcrm
+jdbc.username=root
+jdbc.password=
+is_saas=false
+authorization_code=xxxxxxxx
+其中jdbc.dbhost为mysql所在的主机；
+jdbc.dbport为mysql主机所占用的端口；
+jdbc.dbname为database名称；
+jdbc.username用连接mysql的用户名；
+jdbc.password为连接mysql的密码。
+请在authorization_code键下对应填入该台内存服务器的校验码，并保存退出即可。
+➢	启动
+在backstage目录下，执行nohup ./backstage.sh &进行启动。
+6.3.3、安装sddc
+1）、安装sddc
+把sddc放到指定目录下，比如/usr/local/middleware目录下，就完成了sddc的安装。
+2）、配置参数
+➢	配置conf/quartz.properties
+该文件主要用于配置定时任务的数据库连接，请根据实际情况填入以下参数对应的值，并保存退出即可
+参数	说明
+org.quartz.dataSource.myDS.URL	MySQL的配置地址
+(示例jdbc:mysql://127.0.0.1:3306/db_5_1?useUnicode=true&characterEncoding=utf8 默认修改IP为对应的MYSQL所在服务器IP即可)
+org.quartz.dataSource.myDS.user	MySQL的用户名
+org.quartz.dataSource.myDS.password	MySQL的密码
+➢	配置config.properties
+参数	说明
+harmonizes_url	Harmonizes项目的访问地址
+mac_address_getter	获取本机MAC地址的命令
+authorization_code	根据本机MAC地址生成的唯一授权码（注：部署时需要提供有mac_address_getter生成的MAC地址）
+
+➢	初始化数据
+(1).把script目录下的crm_sms_cache_members.sql、crm_sms_custom_group_members.sql、crm_sms_task.sql和tables_mysql_innodb.sql在quartz.properties配置下的MySQL执行。
+(2).启动sddc
+执行nohup ./sddc.sh &
+6.3.4、一键启动/关闭 
+如果按默认安装，bizserver、sddc和backstage在同一目录下，比如在/usr/local/middware目录下，可执行一键启动脚本startall.sh， 也可一键停止所有服务stopall.sh。如上图（一）所示。
+7、实际部署安装注意事项
+7.1 域名解析DNS设置
+服务器DNS 要检查是否有域名拼不通，涉及短信接口,旺旺精灵接口。 api.sms.shopex.cn webapi.sms.shopex.cn
+
+
+7.2 开启防火墙端口
+开启防火墙端口 redis（6379）  mysql（3306） java 后端计算引擎（800， 注：该端口如果被占用， 可在harmonizes/conf/harmonizes.properties中修改。）
+
+
+7.3 确认服务器跟矩阵请求和响应是否正常
+跟矩阵确认，服务器IP是否已经被加入到白名单。
+如有问题可以联系：
+技术支持QQ：85311170  
+产品QQ：358869633  Mail：zhangrongxing@shopex.cn
+

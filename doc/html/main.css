@@ -1,0 +1,32 @@
+@CHARSET "utf-8";
+body{background: #FAEBD7;font-family:"微软雅黑"}
+div{}
+div.body{width: 1200px;height: 100%;margin: 0 auto;boder-left:1px solid #999;bofer-right:1px solid #999;}
+div.head{height: 50px; padding:20px;;border-bottom:1px solid #999;}/**/
+div.main{height: 100%; padding:20px;}/**border:1px solid #999;**/
+div.foot{width:100%;border-top: 1px solid #999;float: left;height: 30px;line-height: 50px;bottom: 10px;margin-top: 10px;}
+
+div.head div{float:left;}
+div.title{margin-left:20px;}
+div.head div.search{float:right;display:block;line-height: 50px;}
+span.title{line-height: 50px;}
+div.head .logo{width:203px;height:42px;display:block;}
+
+/**左边列表**/
+.main div{display:block;float: left;}
+div.left-main{width: 20%;float:left;overflow:hidden;height: 550px;}
+div.type-list{}
+div.type-list ul{list-style: none;margin-left: -40px;}
+a{text-decoration: none;color: gray;}
+div.type-list ul li{padding:5px 0px;}
+li.active a,li.active{color:#91A7D5;}
+div.right-main{width: 80%;float:left;}
+
+/**主显示功能块**/
+.right-main{}
+.right-main .desc-main{width: 100%;}
+.right-main .desc-main div.desc-block{margin-bottom:5px;padding: 5px;border: 2px solid #91A7D5;border-radius: 5px;overflow: hidden;width: 100%;}/**height: 100px;*/
+h3.focus{cursor: pointer;}
+
+/*Foot*/
+div.foot span.cpyrt{width: 100%;display: block;text-align: center;color: #333;font-size: 10px;bottom: 0px;display:block;position: inherit;}

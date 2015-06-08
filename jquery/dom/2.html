@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery Dom</title>
+    <style>
+        .box{width: 600px;}
+        .box li{  color: white;border-radius: 3px;border: 1px solid #00A000;
+            background: #0e84b5;list-style: none;margin: 5px;float: left;}
+
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <select id="single">
+            <option>选择1号</option>
+            <option>选择2号</option>
+            <option>选择3号</option>
+        </select>
+        <select id="multiple" multiple="multiple" style="height: 120px">
+            <option selected="selected">选择1号</option>
+            <option>选择2号</option>
+            <option>选择3号</option>
+            <option>选择4号</option>
+            <option selected="selected">选择5号</option>
+        </select><br>
+        <input type="checkbox" value="check1" />多选1
+        <input type="checkbox" value="check2" />多选2
+        <input type="checkbox" value="check3" />多选3
+        <input type="checkbox" value="check4" />多选4
+        <input type="checkbox" value="check5" />多选5
+        <input type="radio" value="radio1" name="xxx" />单选1
+        <input type="radio" value="radio2" name="xxx" />单选2
+        <input type="radio" value="radio3" name="xxx" />单选3
+    </div>
+<script>
+    $(document).ready(function(){
+        $("input").change(function(){
+            for(var i=1;i<=($("input").length+1);i++){
+                if(this.value==('check'+i)){
+                    if($(this).is(":checked")){
+                        $("#multiple :eq("+(i-1)+")").attr("selected",true);
+                    }else{
+                        $("#multiple :eq("+(i-1)+")").attr("selected",false);
+                    }
+                }else if(this.value==('radio'+(i-5))){
+                    $("#single option:eq("+(i-6)+")").attr('selected',true);
+                }
+            }
+
+        });
+    });
+</script>
+</body>
+</html>

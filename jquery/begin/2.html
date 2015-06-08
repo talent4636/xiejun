@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>判断是否选中</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>注册名</th>
+            <td>啊哈哈哈哈</td>
+        </tr>
+        <tr>
+            <th>注册名</th>
+            <td>啊哈哈哈哈</td>
+        </tr>
+        <tr>
+            <th>注册名</th>
+            <td>啊哈哈哈哈</td>
+        </tr>
+    </table>
+    <!-- for ID, 作用是：如果点击后面的文字，for中的checkbox会被选中/取消选中  实用 -->
+    <input type="checkbox" id="cr" /><label for="cr">我已近阅读并同意上面的条款</label>
+    <br>
+    <input type="submit" class="tijiao" value="注册" />
+<script>
+    $(document).ready(function(){
+        $('.tijiao').click(function(){
+            if($('#cr').is(":checked")){
+                alert("恭喜，您可以继续操作");
+            }else {
+                alert("抱歉，请先同意用户条款！");
+            }
+        });
+    });
+</script>
+</body>
+</html>
