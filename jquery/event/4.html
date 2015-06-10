@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery图片轮播示例</title>
+    <style>
+        div.v_show{width: 1180px;}
+        .v_content_list{}
+        .v_content{width: 1152px; height: 300px;overflow: hidden;}
+        .v_content_list{position: absolute;}
+        .v_content_list ul{padding-left: 0px;}
+        .v_content_list li{list-style: none;float: left;padding: 20px 10px;}
+        .v_content_list li img{width: 270px;height: 190px;}
+        em a{text-align: right;float: right;}
+        div.highlight_tip,div.change_btn{float: left;}
+        div.highlight_tip{padding-right: 20px;}
+        div.change_btn{cursor: pointer;}
+        .highlight_tip span.current{color: #C83838;}
+    </style>
+</head>
+<body>
+    <div class="v_show">
+        <div class="v_caption">
+            <h2 class="cartoon" title="卡通动漫">卡通动漫</h2>
+            <div class="highlight_tip">
+                <span class="current">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+            </div>
+            <div class="change_btn">
+                <span class="prev">上一页</span>
+                <span class="next">下一页</span>
+            </div>
+            <em><a href="#">更多>></a> </em>
+        </div>
+        <div class="v_content">
+            <div class="v_content_list">
+                <ul>
+                    <li>
+                        <a href="#" ><img src="img/1.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第x一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/2.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/3.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/4.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/5.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/6.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/7.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/8.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                    <li>
+                        <a href="#" ><img src="img/9.jpg" alt="第1张图片" /> </a>
+                        <h4><a href="#" >第一个</a> </h4>
+                        <span>播放：<em>23,212</em></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script>
+    $(function(){
+        var page = 1; //当前页码，初始1
+        var i = 4; //每页4个图片
+        $("span.next").click(function(){
+            var $parent = $(this).parents("div.v_show");
+            var $v_show = $parent.find("div.v_content_list");
+            var $v_content = $parent.find("div.v_content");
+
+            var v_width = $v_content.width();
+            var len = $v_show.find('li').length;
+            var page_count = Math.ceil(len/i);
+
+            if( !$v_show.is(":animated") ){
+                if( page == page_count ){
+                    $v_show.animate( {left:"0px"}, "normal");
+                    page = 1;
+                }else{
+                    $v_show.animate( {left: '-='+v_width}, "normal");
+                    page++;
+                }
+                $parent.find("span").eq((page-1)).addClass("current").siblings().removeClass("current");
+            }
+        });
+        $("span.prev").click(function(){
+            var $parent = $(this).parents("div.v_show");
+            var $v_show = $parent.find("div.v_content_list");
+            var $v_content = $parent.find("div.v_content");
+
+            var v_width = $v_content.width();
+            var len = $v_show.find('li').length;
+            var page_count = Math.ceil(len/i);
+
+            if( !$v_show.is(":animated") ){
+                if( page == 1 ){
+                    $v_show.animate( {left:"-="+v_width*(page_count-1)}, "normal");
+                    page = page_count;
+                }else{
+                    $v_show.animate( {left: '+='+v_width}, "normal");
+                    page--;
+                }
+                $parent.find("span").eq((page-1)).addClass("current").siblings().removeClass("current");
+            }
+        });
+    });
+</script>
+</body>
+</html>
