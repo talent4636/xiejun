@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery表单</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div>
+    <form action="#" method="POST" id="regForm">
+        你爱好的运动是？<br/>
+        <input type="checkbox" id="CheckAll">全选/全不选<br/>
+        <input type="checkbox" name="items" value="足球" />足球
+        <input type="checkbox" name="items" value="篮球" />篮球
+        <input type="checkbox" name="items" value="桌球" />桌球
+        <input type="checkbox" name="items" value="乒乓球" />乒乓球
+        <input type="checkbox" name="items" value="羽毛球" />羽毛球
+        <input type="checkbox" name="items" value="网球" />网球<br/>
+        <input type="button" id="CheckedAll" value="全选" />
+        <input type="button" id="CheckedNo" value="全不选" />
+        <input type="button" id="CheckedRev" value="反选" />
+        <input type="button" id="send" value="提交" />
+    </form>
+
+</div>
+
+<script>
+    $(function(){
+        $("#CheckedAll").click(function(){
+            $("[name=items]:checkbox").attr("checked",true);
+        });
+        $("#CheckedNo").click(function(){
+            $("[name=items]:checkbox").attr("checked",false);
+        });
+        $("#CheckedRev").click(function(){
+            $("[name=items]:checkbox").each(function(){
+                this.checked=!this.checked;
+            });
+        });
+        $("#send").click(function(){
+            var str = "您选中的是:\r\n";
+            $("[name=items]:checkbox:checked").each(function(){
+                str += $(this).val() + "\r\n";
+            });
+            alert(str);
+        });
+
+        //全选框
+        $("#CheckAll").click(function(){
+            $("[name=items]:checkbox").attr("checked",this.checked);
+        });
+        //选项可以控制 全选框
+//        $("[name=items]:checkbox").click(function(){
+//            var flag = true;
+//            $("[name=items]:checkbox").each(function(){
+//                if(!this.checked){
+//                    flag = false;
+//                }
+//            });
+//            $("#CheckAll").attr("checked",flag);
+//        });
+        //另一种思路
+        $("[name=items]:checkbox").click(function(){
+            var $tmp = $("[name=items]:checkbox");
+            $("#CheckAll").attr("checked",$tmp.length==$tmp.filter(":checked").length);
+        });
+    });
+</script>
+</body>
+</html>

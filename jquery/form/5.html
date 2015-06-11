@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery表单验证</title>
+    <style>
+        strong.hight{color:red;}
+        span.formtips{padding: 4px 4px 4px 24px;font-size: 12px;border: 1px solid #BBB;border-radius: 2px;}
+        span.formtips span{padding:  4px 4px 4px 0px;background-color: #ffffff;}
+        .formtips.onError{
+            background: url("./images/icon.jpg") no-repeat -131px -19px;
+            background-size: 150px 130px;
+        }
+        .formtips.onSuccess{
+            background: url("./images/icon.jpg") no-repeat scroll 2px 2px transparent;
+            background-size: 150px 130px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="">
+        <div class="int">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" class="required" />
+        </div>
+        <div class="int">
+            <label for="email">邮箱：</label>
+            <input type="text" id="email" class="required" />
+        </div>
+        <div class="int">
+            <label for="personinfo">个人资料：</label>
+            <input type="text" id="personinfo" class="" />
+        </div>
+        <div class="sub">
+            <input type="submit" value="提交" id="send" />
+            <input type="reset" id="res" />
+        </div>
+    </form>
+
+<script>
+    $(function(){
+        //追加红色必填符
+        $("form :input.required").each(function(){
+            var $required = $("<strong class='hight'> *</strong>");//创建元素
+            $(this).parent().append($required);
+        });
+
+        //添加验证  blur
+        $("form :input").blur(function(){
+            var $parent = $(this).parent();
+            $parent.find('.formtips').remove();
+            if($(this).is("#username")){
+                if(this.value == '' || this.value.length < 6){
+                    var errMsg = "请输入至少6位的用户名";
+                    $parent.append('<span class="formtips onError"><span>'+errMsg+'</span></span>');
+                }else{
+                    var errMsg = "恭喜，验证通过";
+                    $parent.append('<span class="formtips onSuccess"><span>'+errMsg+'</span></span>');
+                }
+            }else if($(this).is("#email")){
+                if(this.value == "" || ( this.value !== "" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value))){
+                    var errMsg = "请输入正确的E-mail地址";
+                    $parent.append('<span class="formtips onError"><span>'+errMsg+'</span></span>');
+                }else{
+                    var errMsg = "恭喜，验证通过";
+                    $parent.append('<span class="formtips onSuccess"><span>'+errMsg+'</span></span>');
+                }
+            }
+        }).keyup(function(){//提升用户体验，在用户点击按钮的时候，也添加事件
+            $(this).triggerHandler("blur");
+        }).focus(function(){
+            $(this).triggerHandler("blur");//注：trigger会触发浏览器的blur效果，但是我们不用，只要触发blur事件即可。
+        });
+
+        //提交的时候，触发blur，验证
+        $("#send").click(function(){
+            $("form .required:input").trigger("blur");
+            var numError = $("form .onError").length;
+            if(numError){
+                return false;
+            }
+            alert("注册成功！");
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <title>jQuery表单</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div>
+    <form action="#" method="POST" id="regForm">
+        <div class="msg_caption">
+            <span class="bigger" >放大</span>
+            <span class="smaller" >缩小</span>
+            <span class="up" >向上</span>
+            <span class="down" >向下</span>
+        </div>
+        <div>
+            <textarea id="comment" rows="8" cols="20">
+                多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。
+                多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。
+                多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。
+                多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。多行文本框高度变化。
+            </textarea>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    $(function(){
+        var $comment = $("#comment");
+        //控制文本域高度
+        $(".bigger").click(function(){
+            if(!$comment.is(":animated")){
+                if($comment.height() < 500){
+//                $comment.height($comment.height() + 50);
+                    $comment.animate({height: "+=50"}, 400);
+                }
+            }
+        });
+        $(".smaller").click(function(){
+            if(!$comment.is(":animated")){
+                if($comment.height() > 50){
+//                    $comment.height($comment.height() - 50);
+                    $comment.animate({height: "-=50"},200);
+                }
+            }
+        });
+        //滚动条高度变化
+        $(".up").click(function(){
+            if(!$comment.is(":animated")){
+                $comment.animate({scrollTop:"-=50"},200);
+            }
+        });
+        $(".down").click(function(){
+            if(!$comment.is(":animated")){
+                $comment.animate({scrollTop:"+=50"},200);
+            }
+        });
+    });
+</script>
+</body>
+</html>
