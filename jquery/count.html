@@ -127,7 +127,8 @@
 
 <script>
     $(function(){
-        var height = 38;
+        var height = 38; //每一个数字的高度，也就是每次翻转的高度（px）
+        //前面的方法写的太丑了，扩展性几乎没有。。。
         $("#add1").click(function(){
             if(!$(".number.seven").is(":animated")){
                 if($(".number.seven").css('marginTop')==(-height*9+"px")){
@@ -202,21 +203,20 @@
 
         //直接输入数值切换
         $("#change").click(function(){
+            $(".number").animate({marginTop: 0},50);
             var $num = $("#num").val();
-            if(!$num){
-                alert("请输入一个数字");
+            var arr = $num.split("");
+            var total =  $("div.box > div").length;
+            if(!$num || arr.length>total ){
+                alert("请输入一个合适的数字 -_-||");
+                return false;
             }else{
-                var arr = $num.split("");
                 $.each(arr,function(n,value) {
-                    var many = arr.length; //共有几位数
-                    var locate = Math.(10)
-                    //do something here
-                    //alert(n+' '+value);
+                    var add = total - arr.length; //共有几位数
+//                    var locate = Math.pow(10,(value-1));//妈的，算了半天，用不上了
+                    $("div.box > div:eq("+(n+add)+")").stop(true,true);
+                    $("div.box > div:eq("+(n+add)+")").animate({marginTop:("-="+value*height)});
                 });
-//                $num.split("").forEach()
-//                alert(Math.floor($num/10));
-                $(".number.first").animate({marginTop:("-="+(-Math.floor($num/1000000)*height))},200);
-                $(".number.seven").animate({marginTop:("-="+(-Math.floor($num/10)*height))},200);
             }
         });
     });
