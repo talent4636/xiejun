@@ -112,6 +112,7 @@
         <span>9</span>
     </div>
 </div>
+<br/><hr><br/>
 <input type="button" value="+1" id="add1" />
 <input type="button" value="+10" id="add10" />
 <input type="button" value="+100" id="add100" />
@@ -119,6 +120,10 @@
 <input type="button" value="+10000" id="add10000" />
 <input type="button" value="+100000" id="add100000" />
 <input type="button" value="+1000000" id="add1000000" />
+
+<br><br>
+请出入数字：<input type="text" id="num" />
+<input type="button" id="change" value="Let's Go!" />
 
 <script>
     $(function(){
@@ -184,7 +189,6 @@
                 }
             }
         });
-        ///////////////////
         $("#add1000000").click(function(){
             if(!$(".number.first").is(":animated")){
                 if($(".number.first").css('marginTop')==(-height*9+"px")){
@@ -193,6 +197,26 @@
                 }else{
                     $(".number.first").animate({marginTop: ("-="+height)},200);
                 }
+            }
+        });
+
+        //直接输入数值切换
+        $("#change").click(function(){
+            var $num = $("#num").val();
+            if(!$num){
+                alert("请输入一个数字");
+            }else{
+                var arr = $num.split("");
+                $.each(arr,function(n,value) {
+                    var many = arr.length; //共有几位数
+                    var locate = Math.(10)
+                    //do something here
+                    //alert(n+' '+value);
+                });
+//                $num.split("").forEach()
+//                alert(Math.floor($num/10));
+                $(".number.first").animate({marginTop:("-="+(-Math.floor($num/1000000)*height))},200);
+                $(".number.seven").animate({marginTop:("-="+(-Math.floor($num/10)*height))},200);
             }
         });
     });
