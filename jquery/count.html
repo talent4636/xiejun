@@ -6,7 +6,7 @@
     <title>jQuery 计数</title>
     <style>
         div.box{
-            width: 85px;
+            width: 200px;
             border: 1px solid #FF9999;
             height: 40px;
             overflow: hidden;
@@ -63,35 +63,129 @@
         <span>8</span>
         <span>9</span>
     </div>
+    <div class="number fourth">
+        <span>0</span>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+    </div>
+    <div class="number fifth">
+        <span>0</span>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+    </div>
+    <div class="number six">
+        <span>0</span>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+    </div>
+    <div class="number seven">
+        <span>0</span>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+    </div>
 </div>
 <input type="button" value="+1" id="add1" />
 <input type="button" value="+10" id="add10" />
 <input type="button" value="+100" id="add100" />
+<input type="button" value="+1000" id="add1000" />
+<input type="button" value="+10000" id="add10000" />
+<input type="button" value="+100000" id="add100000" />
+<input type="button" value="+1000000" id="add1000000" />
 
 <script>
     $(function(){
         var height = 38;
         $("#add1").click(function(){
+            if(!$(".number.seven").is(":animated")){
+                if($(".number.seven").css('marginTop')==(-height*9+"px")){
+                    $(".number.seven").animate({marginTop: 0},200);
+                    $("#add10").triggerHandler('click');
+                }else{
+                    $(".number.seven").animate({marginTop: ("-="+height)},200);
+                }
+            }
+        });
+        $("#add10").click(function(){
+            if(!$(".number.six").is(":animated")){
+                if($(".number.six").css('marginTop')==(-height*9+"px")){
+                    $(".number.six").animate({marginTop: 0},200);
+                    $("#add100").triggerHandler('click');
+                }else{
+                    $(".number.six").animate({marginTop: ("-="+height)},200);
+                }
+            }
+        });
+        ///////
+        $("#add100").click(function(){
+            if(!$(".number.fifth").is(":animated")){
+                if($(".number.fifth").css('marginTop')==(-height*9+"px")){
+                    $(".number.fifth").animate({marginTop: 0},200);
+                    $("#add1000").triggerHandler('click');
+                }else{
+                    $(".number.fifth").animate({marginTop: ("-="+height)},200);
+                }
+            }
+        });
+        $("#add1000").click(function(){
+            if(!$(".number.fourth").is(":animated")){
+                if($(".number.fourth").css('marginTop')==(-height*9+"px")){
+                    $(".number.fourth").animate({marginTop: 0},200);
+                    $("#add10000").triggerHandler('click');
+                }else{
+                    $(".number.fourth").animate({marginTop: ("-="+height)},200);
+                }
+            }
+        });
+        $("#add10000").click(function(){
             if(!$(".number.third").is(":animated")){
                 if($(".number.third").css('marginTop')==(-height*9+"px")){
                     $(".number.third").animate({marginTop: 0},200);
-                    $("#add10").triggerHandler('click');
+                    $("#add100000").triggerHandler('click');
                 }else{
                     $(".number.third").animate({marginTop: ("-="+height)},200);
                 }
             }
         });
-        $("#add10").click(function(){
+        $("#add100000").click(function(){
             if(!$(".number.second").is(":animated")){
                 if($(".number.second").css('marginTop')==(-height*9+"px")){
                     $(".number.second").animate({marginTop: 0},200);
-                    $("#add100").triggerHandler('click');
+                    $("#add1000000").triggerHandler('click');
                 }else{
                     $(".number.second").animate({marginTop: ("-="+height)},200);
                 }
             }
         });
-        $("#add100").click(function(){
+        ///////////////////
+        $("#add1000000").click(function(){
             if(!$(".number.first").is(":animated")){
                 if($(".number.first").css('marginTop')==(-height*9+"px")){
                     $(".number").animate({marginTop: 0},200);
