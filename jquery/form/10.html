@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="../jquery-1.8.3.min.js"></script>
+    <script src="../jquery.cookie.js"></script>
+    <title>jQuery网页换肤</title>
+    <link href="css/skin_0.css" rel="stylesheet" type="text/css" id="cssfile" />
+</head>
+<body>
+    <ul id="skin">
+        <li id="skin_0" title="灰色" class="selected">灰色</li>
+        <li id="skin_1" title="紫色">紫色</li>
+        <li id="skin_2" title="红色">红色</li>
+        <li id="skin_3" title="天蓝色">天蓝色</li>
+        <li id="skin_4" title="橙色">橙色</li>
+        <li id="skin_5" title="淡绿色">淡绿色</li>
+    </ul>
+    <div id="div_side_0">
+        <div id="news">
+            <h1 class="title">时事新闻</h1>
+        </div>
+    </div>
+    <div id="div_side_1">
+        <div id="game">
+            <h1 class="title">娱乐新闻</h1>
+        </div>
+    </div>
+
+<script>
+    $(function(){
+        //网页换肤
+//        var $li = $("#skin li");
+//        $li.click(function(){
+//            $("#"+this.id).addClass("selected").siblings().removeClass('selected');
+//            $("#cssfile").attr("href","css/"+this.id+".css");
+//            $.cookie("MyCssSkin", this.id, {path: '/', expires: 10});
+//        });
+//
+//        var cookie_skin = $.cookie("MyCssSkin");
+//        if(cookie_skin){
+//            $("#"+cookie_skin).addClass('selected').siblings().removeClass('selected');
+//            $("#cssfile").attr('href', "css/"+cookie_skin+".css");
+//            $.cookie("MyCssSkin", cookie_skin, { path: '/', expires: 10});
+//        }
+
+        //函数封装
+        function switchSkin(skinName){
+            $("#"+skinName).addClass("selected").siblings().removeClass("selected");
+            $("#cssfile").attr("href", "css/"+skinName+".css");
+            $.cookie("MyCssSkin", skinName, { path: '/', expires: 10});
+        }
+
+        var $li = $("#skin li");
+        $li.click(function(){
+            switchSkin( this.id );
+        });
+
+        var cookie_skin = $.cookie( "MyCssSkin" );
+        if(cookie_skin){
+            switchSkin( cookie_skin );
+        }
+    });
+</script>
+</body>
+</html>

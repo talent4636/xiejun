@@ -32,9 +32,31 @@
 
 <script>
     $(function(){
-        $("tr:odd").addClass("odd");
+//        $("tr:odd").addClass("odd");
         $("tr:even").addClass("even");
-        $("tr:contains(二傻子)").addClass("selected");
+//        $("tr:contains(二傻子)").addClass("selected");
+
+        //单选框控制高亮
+//        $("tr:gt(0)").append("<input type='radio' name='xxx' />");
+//        $("tbody>tr").click(function(){
+//            $(this).addClass('selected').siblings().removeClass('selected').end().find(':radio').attr('checked',true);
+//        });
+
+        //复选框控制高亮
+        $("tr:gt(0)").append("<input type='checkbox' />");
+//        $("tbody>tr").click(function(){
+//            if($(this).hasClass('selected')){
+//                $(this).removeClass('selected').find(':checkbox').attr('checked',false);
+//            }else{
+//                $(this).addClass('selected').find(':checkbox').attr('checked',true);
+//            }
+//        });
+        //简化
+        $("tbody>tr").click(function(){
+            var hsaSeleceted = $(this).hasClass('selected');
+            $(this)[hsaSeleceted?"removeClass":"addClass"]('selected');
+            $(this).find('checkbox').attr('checked', !hsaSeleceted );
+        });
     });
 </script>
 </body>
