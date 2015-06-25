@@ -21,41 +21,19 @@
 <script>
     $(function(){
         $("#send").click(function(){
-            //html格式
-            $.get("get1.php?type=html", {
-                username : $("#username").val(),
-                content  : $("#content").val()
-            }, function(data, textStatus){
-                $("#resText").html(data);
-            });
-
-            //XML文档
-//            $.get("get1.php?type=xml", {
+            //POST方式
+//            $.post("post1.php", {
 //                username : $("#username").val(),
 //                content  : $("#content").val()
 //            }, function(data, textStatus){
-////                var username = $(data).find("comment").attr("username");
-////                var content = $(data).find("comment content").text();
-//                var username = $(data).find("comment").text();
-//                var content = $(data).find("content").text();
-//                var txtHtml = "<div class='comment'><h6>"
-//                        +username+":</h6><p class='para'>"
-//                        +content+"</p></div>";
-//                $("#resText").html(txtHtml);
+//                $("#resText").html(data);
 //            });
 
-            //json文件
-//            $.get("get1.php?type=json", {
-//                username : $("#username").val(),
-//                content  : $("#content").val()
-//            }, function(data, textStatus){
-//                var username = data.username;
-//                var content = data.content;
-//                var txtHtml = "<div class='comment'><h6>"
-//                        +username+":</h6><p class='para'>"
-//                        +content+"</p></div>";
-//                $("#resText").html(txtHtml);
-//            }, "json");
+            //当load带有参数传递时，会使用post方式发送请求，所以load也可以完成同样的功能
+            $("#resText").load("post1.php",{
+                username : $("#username").val(),
+                content  : $("#content").val()
+            });
         });
     });
 </script>

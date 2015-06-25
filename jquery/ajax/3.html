@@ -22,12 +22,12 @@
     $(function(){
         $("#send").click(function(){
             //html格式
-            $.get("get1.php?type=html", {
-                username : $("#username").val(),
-                content  : $("#content").val()
-            }, function(data, textStatus){
-                $("#resText").html(data);
-            });
+//            $.get("get1.php?type=html", {
+//                username : $("#username").val(),
+//                content  : $("#content").val()
+//            }, function(data, textStatus){
+//                $("#resText").html(data);
+//            });
 
             //XML文档
 //            $.get("get1.php?type=xml", {
@@ -45,17 +45,17 @@
 //            });
 
             //json文件
-//            $.get("get1.php?type=json", {
-//                username : $("#username").val(),
-//                content  : $("#content").val()
-//            }, function(data, textStatus){
-//                var username = data.username;
-//                var content = data.content;
-//                var txtHtml = "<div class='comment'><h6>"
-//                        +username+":</h6><p class='para'>"
-//                        +content+"</p></div>";
-//                $("#resText").html(txtHtml);
-//            }, "json");
+            $.get("get1.php?type=json", {
+                username : $("#username").val(),
+                content  : $("#content").val()
+            }, function(data, textStatus){
+                var username = data.username;
+                var content = data.content;
+                var txtHtml = "<div class='comment'><h6>"
+                        +username+":</h6><p class='para'>"
+                        +content+"</p></div>";
+                $("#resText").html(txtHtml);
+            }, "json");
         });
     });
 </script>
