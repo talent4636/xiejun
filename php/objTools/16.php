@@ -30,7 +30,7 @@ class FtpModule implements Module{
 
 class PersonModule implements Module{
     function setPerson(Person $person){
-        print "PersonModule::setPerson(): $person <br>";
+        print "PersonModule::setPerson(): ".print_r($person,1)." <br>";
     }
     function execute(){
         //
