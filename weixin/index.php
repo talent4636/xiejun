@@ -6,9 +6,8 @@
  */
 
 require_once 'config.php';
-require_once 'city.php';
+//require_once 'city.php';
 require_once 'WeixinCallbackApi.php';
-//require_once 'config.php';
 
 if (defined("DEBUG_MODE") && !DEBUG_MODE){
     error_reporting(0);
