@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      ecstore-vagrant方式开发环境部署 &mdash; ECOS百科全书    </title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="top" title="ECOS百科全书" href="../doc.html" />
+    <link rel="up" title="ECstore部署文档" href="index.html" />
+
+        <link rel="next" title="vagrant_config" href="VagrantBox详细参数(Box包选择手册).html" />
+        <link rel="prev" title="mongodbrepl" href="mongodb 集群方案.html" />
+        <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-27708956-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+        a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];
+        a.async=1;
+        a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43980901-1', 'ec-os.net');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <!-- insert your head here -->
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="vagrant_config.html" title="VagrantBox详细参数(Box包选择手册)" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="mongodbrepl.html" title="mongodb 集群方案" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="index.html">ECstore部署文档</a> &raquo;
+        </li>
+              </ul>
+    </div>
+    
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <h1> ecstore-vagrant方式开发环境部署</h1>
+            <h2><a name="id1">ecstore vagrant 操作手册</a></h2><h3><a name="id2">下载地址</a></h3>
+<ul>
+    <li><a href="vagrant_config.html" class="">VagrantBox详细参数(Box包选择手册)</a>
+</ul>
+
+<p>内网：<a href="http://192.168.51.221/vagrant/">http://192.168.51.221/vagrant/</a></p>
+
+<p>外网：<a href="http://122.144.135.218/ecstore-lnmp-0.0.1.box">http://122.144.135.218/ecstore-lnmp-0.0.1.box</a> (ECstore基础开发环境)外网：<a href="http://122.144.135.218/commerce_b2b2c-lnmp-with-prism-0.0.2.box">http://122.144.135.218/commerce_b2b2c-lnmp-with-prism-0.0.2.box</a> (ECstore基础开发环境)</p>
+<h3><a name="id3">原理</a></h3>
+<p>VirtualBox 是一款开源虚拟机软件。</p>
+
+<p>Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。</p>
+
+<p>ECstore Vagrant 是基于VirtualBox创建的虚拟机，并通过Vagrant进行打包而得到的VM环境。在虚拟机中部署好开发环境并建立虚拟机和实体机的文件共享，在开发时，可以通过实体机进行文件修改，并经过虚拟机中的环境执行，从而实现不同操作系统的工作环境的轻松部署。</p>
+<h3><a name="id4">安装文档</a></h3>
+<ol>
+<li>下载并安装VirtualBox（ <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a>  ）。
+<li>VirtualBox 4.3.12下载地址(windows请用此链接)：<a href="http://dlc-cdn.sun.com/virtualbox/4.3.12/index.html">http://dlc-cdn.sun.com/virtualbox/4.3.12/index.html</a>
+<li>下载并安装Vagrant（  <a href="http://www.vagrantup.com/downloads.html">http://www.vagrantup.com/downloads.html</a>  ）。
+<li>下载ecstore.box。
+<li>执行<span class="mark">vagrant box add ecstore/centos65 $name.box</span>。<pre class="quote">vagrant box add ecstore/centos65 $name.box
+</pre>
+<li>进入工作目录（workspace）(cd workspacedir)(比如:cd ~/code/)。<pre class="quote">cd workspacedir
+</pre>
+<li>执行vagrant init ecstore/centos65。<pre class="quote">vagrant init ecstore/centos65
+</pre>
+<li>执行vagrant up。<pre class="quote">vagrant up
+</pre>
+<li>在工作目录(workspace)解压ecstore开发包，用浏览器打开127.0.0.1:8000即可。</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</ol>
+<h3><a name="id5">注意</a></h3>
+<ol>
+<li>所有操作需要在workspace目录下执行
+<li>浏览页面是127.0.0.1:8000。对应workspace/ecstore/
+<li>mysql网页配置端口是3306，如果需要从母机连接，需要访问33060端口。
+<li>如果需要连接ssh，为：vagrant ssh 即可。
+<li>windows下，因为virtualbox本身一个bug，所以不能使用4.3.18版本，4.3.12版本可以用。
+<li>win8可能需要改bios（开启intel的虚拟技术intel Virtualization Technology）
+<li>box中的系统是64位的，建议在64位操作系统中使用</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</ol>
+<h3><a name="id6">Vagrant 操作命令</a></h3>
+<ol>
+<li>导入box<pre class="quote">vagrant box add [BOX NAME] [BOX URL]
+</pre>
+<li>显示box列表<pre class="quote">vagrant box list
+</pre>
+<li>移除box列表<pre class="quote">vagrant box remove [BOX NAME]
+</pre>
+<li>初始化Vagrant（给当前目录创建vagrant环境）<pre class="quote">vagrant init [BOX NAME]
+</pre>
+<li>启动Vagrant<pre class="quote">vagrant up
+</pre>
+<li>关闭Vagrant<pre class="quote">vagrant halt
+</pre>
+<li>暂停Vagrant<pre class="quote">vagrant suspend
+</pre>
+<li>删除当前目录的Vagrant环境<pre class="quote">vagrant destroy
+</pre>
+<li>实际环境中如果需要进行其它操作，可以使用<span class="mark">-h</span>参数来获取帮助例如：<pre class="quote">vagrant -h
+</pre></li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="doczensidebar">
+        <div class="doczensidebarwrapper">
+          <h3><a href="../doc.html">內容目录</a></h3>
+          
+<ul>
+    <li><a href="#id1" class="reference internal">ecstore vagrant 操作手册</a>
+        <ul>
+        <li><a href="#id2" class="reference internal">下载地址</a>
+        <li><a href="#id3" class="reference internal">原理</a>
+        <li><a href="#id4" class="reference internal">安装文档</a>
+        <li><a href="#id5" class="reference internal">注意</a>
+        <li><a href="#id6" class="reference internal">Vagrant 操作命令</a>
+    </ul>
+</ul>
+
+                      <h4>上一个主题</h4>
+            <p class="topless"><a href="mongodbrepl.html"
+                                  title="上一章">mongodb 集群方案</a></p>
+                      <h4>下一个主题</h4>
+            <p class="topless"><a href="vagrant_config.html"
+                                  title="下一章">VagrantBox详细参数(Box包选择手册)</a></p>
+          
+          <h3>快速搜索</h3>
+<!--           <form method=get action="http://www.google.com.hk/search" target="_blank">
+  <input type=text name=q>
+  <input type=submit name=btnG value="搜索">
+
+  <input type=hidden name=ie value="UTF-8">
+  <input type=hidden name=oe value="UTF-8">
+  <input type=hidden name=hl value="zh-CN">
+  <input type=hidden name=domains value="www.ec-os.net">
+  <input type=hidden name=sitesearch value="www.ec-os.net">
+</form> -->
+          <form action="http://www.baidu.com/baidu" target="_blank"> 
+            <input type=text name=word> 
+            <input type=submit value="搜索"> 
+            <input name=ie type=hidden value="UTF-8">
+            <input name=tn type=hidden value="baidu"> 
+            <input name=cl type=hidden value="3"> 
+            <input name=ct type=hidden value="2097152"> 
+            <input name=si type=hidden value="www.ec-os.net"> 
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+          输入相关的模块，术语，类或者函数名称进行搜索
+          </p>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="vagrant_config.html" title="VagrantBox详细参数(Box包选择手册)" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="mongodbrepl.html" title="mongodb 集群方案" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="index.html">ECstore部署文档</a> &raquo;
+        </li>
+              </ul>
+    </div>
+        <div class="footer">
+      使用 <a href="http://ec-os.net/doczen.html">Doczen</a> 0.1    </div>
+
+  </body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      redis安装 &mdash; ECOS百科全书    </title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="top" title="ECOS百科全书" href="../../doc.html" />
+    <link rel="up" title="资料" href="../../_refs.html" />
+
+        <link rel="next" title="memcached2" href="Memcached安装.html" />
+        <link rel="prev" title="mongodb" href="mongodb安装.html" />
+        <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-27708956-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+        a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];
+        a.async=1;
+        a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43980901-1', 'ec-os.net');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <!-- insert your head here -->
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="memcached2.html" title="Memcached安装" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="mongodb.html" title="mongodb安装" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="../../_refs.html">资料</a> &raquo;
+        </li>
+              </ul>
+    </div>
+    
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <h1> redis安装</h1>
+            
+<ul>
+<li>安装redis
+<ol>
+<li>redis 安装<pre>  $ wget http://download.redis.io/releases/redis-2.8.13.tar.gz
+  $ tar xzf redis-2.8.13.tar.gz
+  $ cd redis-2.8.13
+  $ make
+</pre>
+<li>运行redis 加载redis的配置文件redis.conf<pre>  编译后的可执行文件在src目录中，可以使用下面的命令运行Redis:
+
+  $ src/redis-server redis.conf
+
+  你可以使用内置的客户端连接Redis:
+
+  $ src/redis-cli
+  redis&gt; set foo bar
+  OK
+  redis&gt; get foo
+  &quot;bar&quot;
+</pre>
+<li>redis配置<pre>  (这个是我个人的配置，根据自己的需求配置即可,配置完记得重新启动redis并加载配置)
+  # daemonize no 默认情况下，redis不是在后台运行的，如果需要在后台运行，把该项的值更改为yes
+    daemonize yes
+  # 当redis在后台运行的时候，Redis默认会把pid文件放在/var/run/redis.pid，你可以配置到其他地址。
+  pidfile /var/run/redis.pid
+  # 指定redis运行的端口，默认是6379
+  port 6379
+  # 指定redis只接收来自于该IP地址的请求，如果不进行设置，那么将处理所有请求，
+  # 在生产环境中最好设置该项
+  # bind 127.0.0.1
+  # 设置客户端连接时的超时时间，单位为秒。当客户端在这段时间内没有发出任何指令，那么关闭该连接
+  # 0是关闭此设置
+  timeout 0
+  # 指定日志记录级别
+  # Redis总共支持四个级别：debug、verbose、notice、warning，默认为verbose
+  # debug	记录很多信息，用于开发和测试
+  # varbose	有用的信息，不像debug会记录那么多
+  # notice	普通的verbose，常用于生产环境
+  # warning	只有非常重要或者严重的信息会记录到日志
+  loglevel debug
+  # 配置log文件地址
+  # 默认值为stdout，标准输出，若后台模式会输出到/dev/null
+  #logfile stdout
+  logfile /var/log/redis/redis.log
+  # 可用数据库数
+  # 默认值为16，默认数据库为0，数据库范围在0-（database-1）之间
+  databases 16
+  ################################ 快照 #################################
+  #
+  # 保存数据到磁盘，格式如下:
+  #
+  #   save &lt;seconds&gt; &lt;changes&gt;
+  #
+  #   指出在多长时间内，有多少次更新操作，就将数据同步到数据文件rdb。
+  #   相当于条件触发抓取快照，这个可以多个条件配合
+  #    
+  #   比如默认配置文件中的设置，就设置了三个条件
+  #
+  #   save 900 1  900秒内至少有1个key被改变
+  #   save 300 10  300秒内至少有300个key被改变
+  #   save 60 10000  60秒内至少有10000个key被改变
+
+  save 900 1
+  save 300 10
+  save 60 10000
+
+  # 存储至本地数据库时（持久化到rdb文件）是否压缩数据，默认为yes
+  rdbcompression yes
+  # 本地持久化数据库文件名，默认值为dump.rdb
+  dbfilename dump.rdb
+  # 工作目录
+  #
+  # 数据库镜像备份的文件放置的路径。
+  # 这里的路径跟文件名要分开配置是因为redis在进行备份时，先会将当前数据库的状态写入到一个临时文件中，等备份完成时，
+  # 再把该该临时文件替换为上面所指定的文件，而这里的临时文件和上面所配置的备份文件都会放在这个指定的路径当中。
+  #
+  # AOF文件也会存放在这个目录下面
+  #
+  # 注意这里必须制定一个目录而不是文件
+  dir ./
+  ################################# 复制 #################################
+  
+  # 设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，
+  # 如果设置 maxclients 0，表示不作限制。
+  # 当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息
+  #
+  # maxclients 128
+</pre>
+<li>php上安装redis扩展<pre>  $ wget https://github.com/owlient/phpredis/archive/master.zip
+  $ unzip phpredis-master
+  $ cd phpredis-master
+  $ /usr/local/webserver/php/bin/phpsize (你的php安装目录下的bin下的phpsize)
+  $ ./configure --with-php-config=/usr/local/webserver/php/bin/php-config
+  $ make
+  $ make install
+</pre>
+<li>修改php的配置文件php.ini<pre>  $ vim /usr/local/webserver/php/php.ini (你的php配置文件 php.ini)
+
+  添加一条配置:extension=redis.so
+
+  重启apache或者nginx
+</pre>
+<li>安装过程可能出现的问题<pre>  Configuring for:
+  PHP Api Version:         20041225
+  Zend Module Api No:      20060613
+  Zend Extension Api No:   220060519
+  Cannot find autoconf. Please check your autoconf installation and the  $PHP_AUTOCONF  environment variable is set correctly and then rerun this script.
+
+  解决办法:
+  $ wget http://ftp.gnu.org/gnu/m4/m4-1.4.9.tar.gz
+  $ tar -zvxf m4-1.4.9.tar.gz
+  $ cd m4-1.4.9/
+  $ ./configure &amp;&amp; make &amp;&amp; make install
+  $ cd ../
+  $ wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.62.tar.gz
+  $ tar -zvxf autoconf-2.62.tar.gz
+  $ cd autoconf-2.62/
+  $ ./configure &amp;&amp; make &amp;&amp; make install
+</pre></li>
+</li>
+</li>
+</li>
+</li>
+</li>
+</ol>
+</li>
+</ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="doczensidebar">
+        <div class="doczensidebarwrapper">
+          <h3><a href="../../doc.html">內容目录</a></h3>
+          
+<ul>
+</ul>
+
+                      <h4>上一个主题</h4>
+            <p class="topless"><a href="mongodb.html"
+                                  title="上一章">mongodb安装</a></p>
+                      <h4>下一个主题</h4>
+            <p class="topless"><a href="memcached2.html"
+                                  title="下一章">Memcached安装</a></p>
+          
+          <h3>快速搜索</h3>
+<!--           <form method=get action="http://www.google.com.hk/search" target="_blank">
+  <input type=text name=q>
+  <input type=submit name=btnG value="搜索">
+
+  <input type=hidden name=ie value="UTF-8">
+  <input type=hidden name=oe value="UTF-8">
+  <input type=hidden name=hl value="zh-CN">
+  <input type=hidden name=domains value="www.ec-os.net">
+  <input type=hidden name=sitesearch value="www.ec-os.net">
+</form> -->
+          <form action="http://www.baidu.com/baidu" target="_blank"> 
+            <input type=text name=word> 
+            <input type=submit value="搜索"> 
+            <input name=ie type=hidden value="UTF-8">
+            <input name=tn type=hidden value="baidu"> 
+            <input name=cl type=hidden value="3"> 
+            <input name=ct type=hidden value="2097152"> 
+            <input name=si type=hidden value="www.ec-os.net"> 
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+          输入相关的模块，术语，类或者函数名称进行搜索
+          </p>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="memcached2.html" title="Memcached安装" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="mongodb.html" title="mongodb安装" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="../../_refs.html">资料</a> &raquo;
+        </li>
+              </ul>
+    </div>
+        <div class="footer">
+      使用 <a href="http://ec-os.net/doczen.html">Doczen</a> 0.1    </div>
+
+  </body>
+</html>

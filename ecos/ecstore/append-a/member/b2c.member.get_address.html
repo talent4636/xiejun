@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      b2c.member.get_address 根据会员查询收货地址 &mdash; ECOS百科全书    </title>
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="top" title="ECOS百科全书" href="../../../doc.html" />
+    <link rel="up" title="ecstore  被外部系统请求的api接口" href="../index.html" />
+
+        <link rel="next" title="b2c.member.get_member_info" href="b2c.member.get_member_info 用户基本信息查询.html" />
+        <link rel="prev" title="b2c.member.save_address" href="b2c.member.save_address 保存会员新建/编辑的收货地址.html" />
+        <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-27708956-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+        a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];
+        a.async=1;
+        a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43980901-1', 'ec-os.net');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <!-- insert your head here -->
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="b2c.member.get_member_info.html" title="b2c.member.get_member_info 用户基本信息查询" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="b2c.member.save_address.html" title="b2c.member.save_address 保存会员新建/编辑的收货地址" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../../../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="../../index.html">ECStore 开发指南</a> &raquo;
+        </li>
+                <li>
+          <a href="../../api.html">API</a> &raquo;
+        </li>
+                <li>
+          <a href="../index.html">ecstore  被外部系统请求的api接口</a> &raquo;
+        </li>
+              </ul>
+    </div>
+    
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <h1> b2c.member.get_address 根据会员查询收货地址</h1>
+            
+<table class="docutils">
+<tr>
+<th>参数</th>
+
+<th>类型</th>
+
+<th>是否必须</th>
+
+<th>说明</th>
+</tr>
+
+<tr>
+<td>member_id</td>
+
+<td>int</td>
+
+<td>Y</td>
+
+<td>会员ID</td>
+</tr>
+
+<tr>
+<td>accesstoken</td>
+
+<td>string</td>
+
+<td>Y</td>
+
+<td>会员登录返回的 accesstoken</td>
+</tr>
+</table>
+</table>
+<h2><a name="id1">API应用级返回结果</a></h2>
+<p>成功后，返回结果</p>
+<pre class="mark">Array
+(
+    [rsp] =&gt; succ
+    [data] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [ship_id] =&gt; 9
+                    [ship_name] =&gt; 子夜
+                    [ship_area] =&gt; mainland:上海/上海市/徐汇区:25
+                    [ship_addr] =&gt; 上海上海sss
+                    [ship_zip] =&gt; 100000
+                    [ship_tel] =&gt; 
+                    [ship_mobile] =&gt; 15021391235
+                    [is_default] =&gt; true
+                )
+
+            [1] =&gt; Array
+                (
+                    [ship_id] =&gt; 10
+                    [ship_name] =&gt; 叶林
+                    [ship_area] =&gt; mainland:北京/北京市/东城区:3
+                    [ship_addr] =&gt; 北京北京sssss
+                    [ship_zip] =&gt; 100000
+                    [ship_tel] =&gt; 
+                    [ship_mobile] =&gt; 15021391234
+                    [is_default] =&gt; false
+                )
+
+        )
+
+    [res] =&gt; EF6CA42B0A9B4B39E64B15EDC5726987  
+)
+
+</pre>
+<p>失败返回<pre class="mark">Array
+(
+    [rsp] =&gt; succ
+    [data] =&gt; Array
+        (
+            [status] =&gt; false
+            [message] =&gt; 收货地址重复
+        )
+
+    [res] =&gt; 1557E4D86B2E6681F4EF37383DE15E4E  
+)
+
+
+
+</pre></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="doczensidebar">
+        <div class="doczensidebarwrapper">
+          <h3><a href="../../../doc.html">內容目录</a></h3>
+          
+<ul>
+    <li><a href="#id1" class="reference internal">API应用级返回结果</a>
+</ul>
+
+                      <h4>上一个主题</h4>
+            <p class="topless"><a href="b2c.member.save_address.html"
+                                  title="上一章">b2c.member.save_address 保存会员新建/编辑的收货地址</a></p>
+                      <h4>下一个主题</h4>
+            <p class="topless"><a href="b2c.member.get_member_info.html"
+                                  title="下一章">b2c.member.get_member_info 用户基本信息查询</a></p>
+          
+          <h3>快速搜索</h3>
+<!--           <form method=get action="http://www.google.com.hk/search" target="_blank">
+  <input type=text name=q>
+  <input type=submit name=btnG value="搜索">
+
+  <input type=hidden name=ie value="UTF-8">
+  <input type=hidden name=oe value="UTF-8">
+  <input type=hidden name=hl value="zh-CN">
+  <input type=hidden name=domains value="www.ec-os.net">
+  <input type=hidden name=sitesearch value="www.ec-os.net">
+</form> -->
+          <form action="http://www.baidu.com/baidu" target="_blank"> 
+            <input type=text name=word> 
+            <input type=submit value="搜索"> 
+            <input name=ie type=hidden value="UTF-8">
+            <input name=tn type=hidden value="baidu"> 
+            <input name=cl type=hidden value="3"> 
+            <input name=ct type=hidden value="2097152"> 
+            <input name=si type=hidden value="www.ec-os.net"> 
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+          输入相关的模块，术语，类或者函数名称进行搜索
+          </p>
+        </div>
+      </div>
+
+      <div class="clearer"></div>
+    </div>
+
+        <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../doc.html" title="总目录" accesskey="I">索引</a>
+        </li>
+                <li class="right" >
+          <a href="b2c.member.get_member_info.html" title="b2c.member.get_member_info 用户基本信息查询" accesskey="N">下一页</a> |
+        </li>
+                <li class="right" >
+          <a href="b2c.member.save_address.html" title="b2c.member.save_address 保存会员新建/编辑的收货地址" accesskey="P">上一页</a> |
+        </li>
+        
+                <li>
+          <a href="../../../doc.html">ECOS百科全书</a> &raquo;
+        </li>
+                <li>
+          <a href="../../index.html">ECStore 开发指南</a> &raquo;
+        </li>
+                <li>
+          <a href="../../api.html">API</a> &raquo;
+        </li>
+                <li>
+          <a href="../index.html">ecstore  被外部系统请求的api接口</a> &raquo;
+        </li>
+              </ul>
+    </div>
+        <div class="footer">
+      使用 <a href="http://ec-os.net/doczen.html">Doczen</a> 0.1    </div>
+
+  </body>
+</html>
