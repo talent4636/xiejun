@@ -1,0 +1,41 @@
+<style>
+    div.loading-box{overflow: hidden;width:90%;border: 1px solid #888;height: 20px;background:#DDD;border-radius:5px;padding-right: 2px;}
+    span.loading-real{display:block; width: 0%;margin: 1px;background: #5f739f;height: 18px;    border-radius: 4px;}
+</style>
+<div>
+    <br/>
+    <div class="loading-box" id="box">
+        <span class="loading-real" id="box-percent"></span>
+    </div>
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="button" value="Go" id="start">&nbsp;&nbsp;&nbsp;&nbsp;<em id="number-per">0</em>%
+</div>
+
+<script>
+    var url = "app=loading&ctl=loading&act=ajaxData";
+    $("start").addEvent('click',function(){
+        $("box-percent").style.width = "0%";
+        $("number-per").innerHTML = "0";
+        doAjax(0);
+    });
+    var doAjax = function(d){
+        var myRequest=new Request({//建立Request对象
+            url:"index.php?app=loading&ctl=loading&act=ajaxData",
+            method:'post',
+            onSuccess:function(responseText){
+                responseText = JSON.decode(responseText);
+                responseText = responseText['count'];
+                if(responseText >= 100){
+                    $("box-percent").style.width = "100%";
+                    $("number-per").innerHTML = "100";
+                    return false;
+                }else{
+                    $("number-per").innerHTML = responseText;
+                    $("box-percent").style.width = responseText+"%";
+//                    alert(d);
+                    doAjax(responseText);
+                }
+            }
+        }).send("count="+d);
+    }
+</script>

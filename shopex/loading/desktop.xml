@@ -1,0 +1,10 @@
+<desktop>
+    <permissions>
+         <!--<permission id="aftersale_delivery_refuse_process">发货追回</permission>-->
+    </permissions>
+    <workground name="Loading" id="loading_lalala" order="100">
+        <menugroup name="Loading">
+            <menu controller='loading' action='index' permission='xxxxx' display='true'>Loading~</menu>
+        </menugroup>
+    </workground>
+</desktop>
