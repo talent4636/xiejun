@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>图片轮播</title>
+	<script type="text/javascript" src="jquery-1.12.2.min.js"></script>
+	<style type="text/css">
+		/*图片轮播部分*/
+		div.box{width: 994px;border: 1px solid #999;margin: 0 auto;overflow: hidden;border-radius: 10px;height: 245px;}
+		ul.list-all{width: 1984px;margin-left: 0px;left: 0px;} /* 240x8+20x8 = */
+		li.list{list-style: none;margin-left: -40px;margin-top: -10px;}
+		ul li{margin:0;padding:0;}
+		div.each{width: 240px;float: left;padding: 0px 4px;}
+		.each img{width: 240px;float: left;height: 180px;border: 1px solid #DDD;border-radius: 10px;}
+		.each span{display: block;text-align: center;font-size: 20px;font-family: 微软雅黑;color: white;line-height: 30px;background-color: gray;height: 30px;margin-top: 190px;padding: 5px;border-radius: 5px;}
+		/*按钮*/
+		div.button-area{width:300px;margin:0 auto; height:50px; margin-top: 20px;}
+		div.button{float: left;width:130px;background-color: gray;border-radius: 10px;margin: 0px 10px;cursor: pointer;}
+		div.button span{line-height: 50px;text-align: center;display: block;font-weight: bold;color: white;}
+	</style>
+</head>
+<body>
+	<div class="box" id="box-father">
+		<ul class="list-all" id="list-all">
+			<li class="list">
+				<div class="each">
+					<img src="images/1.jpg">
+					<span class="title">啦啦啦-1</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/2.jpg">
+					<span class="title">啦啦啦-2</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/3.jpg">
+					<span class="title">啦啦啦-3</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/4.jpg">
+					<span class="title">啦啦啦-4</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/5.jpg">
+					<span class="title">啦啦啦-5</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/6.jpg">
+					<span class="title">啦啦啦-6</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/7.jpg">
+					<span class="title">啦啦啦-7</span>
+				</div>
+			</li>
+			<li class="list">
+				<div class="each">
+					<img src="images/8.jpg">
+					<span class="title">啦啦啦-8</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div style="" class="button-area">
+		<div class="button right" name="right" to="right">
+			<span>向右</span>
+		</div>
+		<div class="button left" name="left" to="left">
+			<span>向左</span>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	/**
+	图片轮播核心js [基于jquery] 2016-3-26 23:21:24
+	如果您发现js中的bug，请联系 talent4636@gmail.com 或者 xiejun@shopex.cn
+	*/
+	
+	//config
+	var visibleNum = 4;//窗口上显示几个元素 默认4个
+	var totalNum = 8;//一共有几个元素
+	var autoPlay = 1;//1 自动播放，  0 不自动播放
+	var splitTime = 2000;//[autoPlay是1时生效]自动播放间隔时间  单位：ms
+	var animateSpeed = 300;//图片切换的动画速度，可选值 "slow"|"normal"|"fast"|[1500](单位：ms)
+	var eachWidth = 248;//每个元素的宽度 [图片宽度+间距，单位：px]
+
+	$(document).ready(function(){
+		if (autoPlay == 1) {
+			$("#box-father").attr("parse","NO");
+			auto();
+		};
+		//给绑定按钮事件
+		$(".button").on({
+			'mouseover':function(){
+				$(this).css("background-color","lightblue");
+			},  
+		    'mouseout':function(){
+		    	$(this).css("background-color","gray");
+		    }, 
+		    'click':function(){
+		    	// $(this).css("background-color","yellow");
+		    	moveBox($(this).attr('name'));
+		    }
+		});
+	});
+
+	var moveBox = function(to){
+		var boxFather = $("#box-father");
+		var box = $("#list-all");
+		var nowPosition = parseInt(box.css("margin-left"));
+		//判断是否处于动画状态
+		if(box.is(":animated")){
+			return false;
+		}
+		if(to == 'left'){
+			if (nowPosition <= -(eachWidth*(totalNum-visibleNum))) {
+				box.animate({"margin-left":"0px"},animateSpeed);
+			}else{
+				var nowPos = parseInt(box.css("margin-left"));
+				var toLeft = (nowPos-eachWidth);
+				box.animate({"margin-left":toLeft+"px"},animateSpeed);
+			}
+		}else{
+			if (nowPosition>=0) {
+				box.animate({"margin-left":"-"+(eachWidth*(totalNum-visibleNum))+"px"},animateSpeed);
+			}else{
+				var nowPos = parseInt(box.css("margin-left"));
+				var toLeft = (nowPos+eachWidth);
+				box.animate({"margin-left":toLeft+"px"},animateSpeed);
+			}
+		}
+	};
+
+	//自动播放
+	var auto = function(){
+		setTimeout(function(){
+			if (autoPlay == 1) {
+				if ($("#box-father").attr("parse") == "NO") {
+					$("div.left").trigger("click");
+				}
+				auto();
+			}
+		}, splitTime);
+	};
+
+	//鼠标移到图片上，自动播放停止。鼠标移开，开始自动播放
+	$("li.list").on({
+		'mouseover':function(){
+			$("#box-father").attr("parse","YES");
+		},
+		'mouseout':function(){
+			$("#box-father").attr("parse","NO");
+	    }
+	});
+
+
+	
+	 
+</script>
+</body>
+</html>
