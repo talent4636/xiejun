@@ -16,6 +16,17 @@ var clock = {
         var canvas = canvasEle.getContext('2d');
         return canvas;
     },
+    //配置项
+    "config": function(key){
+        var config = [];
+        config['on_color']  = "#000";//显示显色
+        config['off_color'] = "#EEE";//不显示的颜色
+        config['margin']    = 20;//间隔
+        config['each_width']= 20;//每一个笔画的宽
+        config['each_height']= 100;//每一个笔画的高
+        config['number_margin'] = 10;//每两个数字之间的间隔
+        return config[key];
+    },
     "init" : function(){
         var cvs = clock.canvas();
         cvs.fillStyle = "#BBB";
@@ -29,7 +40,7 @@ var clock = {
         itemArr.drawEve(5,s%10);
     },
     "clean": function(){
-        //
+        //todo
     },
     "drowNow": function(){
         var oDate = new Date();
@@ -43,30 +54,31 @@ var clock = {
 //算法
 var itemArr = {
     "itemW": function(){
-        return [100,10];
+        return [clock.config('each_height'),clock.config('margin')];
     },
     "itemH": function(){
-        return [10,100];
+        return [clock.config('margin'),clock.config('each_height')];
     },
     //type = 1 2 3 4 (int)
     "drawEve": function(type_int,num){
         num = parseInt(num);
         var arr = itemArr.arraySeven();
-        var marg_width = 130;
+        var marg_width = clock.config('each_width')*2 + clock.config('each_height') + clock.config('number_margin');
+        alert(marg_width);
         var cvs = clock.canvas();
         var colorArr = itemArr.arrByNum(num);
         for(var i=0;i<7;i++){
             if(colorArr[i] == 1){
-                cvs.fillStyle = "#000";
+                cvs.fillStyle = clock.config('on_color');
             }else{
-                cvs.fillStyle = "#EEE";
+                cvs.fillStyle = clock.config('off_color');
             }
             cvs.fillRect(arr[i][0]+marg_width*type_int+parseInt(type_int/2)*50,arr[i][1],arr[i][2][0],arr[i][2][1]);
         }
     },
     //返回一个二维数组，底维是每个长条的四个值
     "arraySeven": function(){
-        var marg = 10;
+        var marg = 20;
         var array7 = [
             [0,marg,itemArr.itemH()],//1
             [marg,0,itemArr.itemW()],//2
