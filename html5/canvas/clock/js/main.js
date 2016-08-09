@@ -1,0 +1,99 @@
+/**
+ * Created by Administrator on 2016/8/9.
+ */
+
+//config
+var oneRadius = 15;
+var oneMargin = 1;
+var winWidth = (oneRadius+oneMargin)*2*(7*6+4*2);
+var winHeight = 1000;
+var colorRand = ['#FF8040','#B7FF4A','#4A4AFF','#79FF79','#00FFFF','#AD5A5A','#FF8040','#B766AD','#5A5AAD','#FF2D2D','#BE77FF','#ADADAD'];
+
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+//init setting
+canvas.width = winWidth;
+canvas.height = winHeight;
+
+
+/**
+ * @param num 要显示的数字
+ * @param locate  坐标 {x:111, Y:222}
+ */
+var drowMain = function(num,locate){
+    drowNum(locate,NUMBER_CODE[num]);
+}
+
+var drowNum = function(locate,numArr2){
+    var c = Math.round(Math.random() * colorRand.length);
+    var color = colorRand[c];
+    var h = Math.round(numArr2[0].length);//列数
+    var l = Math.round(numArr2.length);//行数
+    //console.log("行："+l+"，列："+h);
+    for(var i = 0; i < h; i++){
+        for(var j = 0; j < l; j++){
+            var have = numArr2[j][i];
+            have?drowOne(locate,{x:(oneRadius+oneMargin)*((i+1)*2-1),y:(oneRadius+oneMargin)*((j+1)*2-1)},"#DDDDDD"):null;
+        }
+    }
+
+}
+
+var getRandomColor = function(){
+    return colorRand[Math.round(Math.random() * colorRand.length)];
+}
+
+/**
+ *
+ * @param x, y 相对坐标
+ * @param color string
+ */
+var drowOne = function(origin_loc,loc, color){
+    //var locReal = locate_trans(loc);
+    var locReal = loc;
+    locReal.x += origin_loc.x;
+    locReal.y += origin_loc.y;
+    //console.log(origin_loc);
+    //ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(locReal.x,locReal.y,oneRadius,0,Math.PI*2,false);
+    ctx.closePath();
+    ctx.fill();
+}
+
+var locate_trans = function(loc){
+    var cliRect = canvas.getBoundingClientRect();
+    return {x:loc.x+cliRect.left,y:loc.y+cliRect.top};
+}
+
+//drowMain(0,{x:100,y:100});
+
+
+
+var main = function(){
+    ctx.clearRect(0,0,winWidth,winHeight);
+    var time = new Date();
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+    var R = oneRadius+oneMargin;
+    //显示小时
+    drowMain(Math.floor(hours/10), {x:R,y:0});
+    drowMain(Math.round(hours%10), {x:(R*2*7+R),y:0});
+    //显示冒号
+    drowMain(10, {x:(R*2*7*2+R),y:0});
+    //显示分钟
+    drowMain(Math.floor(minutes/10), {x:(R*2*7*2+4*R*2+R),y:0});
+    drowMain(Math.round(minutes%10), {x:(R*2*7*3+4*R*2+R),y:0});
+    //显示冒号
+    drowMain(10, {x:(R*2*7*4+4*R*2+R),y:0});
+    //显示seconds
+    drowMain(Math.floor(seconds/10), {x:(R*2*7*4+4*R*2+R+R*4*2),y:0});
+    drowMain(Math.round(seconds%10), {x:(R*2*7*4+4*R*2+R+R*4*2+R*7*2),y:0});
+    //console.log('当前时间'+hours+':'+minutes+':'+seconds+"\n\n 十位："+Math.floor(hours/10)+"， 个位："+Math.round(hours%10));
+}
+
+setInterval(main,300);
+//main();
