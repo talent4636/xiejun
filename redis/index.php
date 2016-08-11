@@ -8,6 +8,8 @@
 require_once 'config.php';
 require_once 'redis.php';
 
+$time = microtime(true);
+
 $redis = new redisInit();
 $redisConfig = array(
     'server'=>REDIS_HOST,
@@ -15,10 +17,11 @@ $redisConfig = array(
 );
 $redis->init($redisConfig);
 
-for($i=0; $i<100000; $i++){
+for($i=0; $i<1000; $i++){
     $redis->set('redis-'.$i,'redis-value-'.$i.rand(1,$i));
 }
+$end = microtime(true);
 
-exit('succ');
+exit('succ. time spend:'.($end-$time).'s');
 
 ?>
