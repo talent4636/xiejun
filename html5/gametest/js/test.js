@@ -64,7 +64,7 @@ var itemArr = {
         num = parseInt(num);
         var arr = itemArr.arraySeven();
         var marg_width = clock.config('each_width')*2 + clock.config('each_height') + clock.config('number_margin');
-        alert(marg_width);
+        //alert(marg_width);
         var cvs = clock.canvas();
         var colorArr = itemArr.arrByNum(num);
         for(var i=0;i<7;i++){
