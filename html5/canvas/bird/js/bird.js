@@ -41,6 +41,10 @@ mogu.src = JUMP_IMAGE_URL;
 init();
 
 var main = function(){
+    console.log("当前游戏状态："+gameStatus);
+    if(gameStatus == 2){
+        return ;
+    }
     //计算出mogu的速度和位置
     speed += STATIC_G;
     mogu_posi_y -= speed*0.5;
@@ -90,7 +94,9 @@ var gameMain = function(){
     for(var i=0; i<CANVAS_TOTAL_BACKGROUD_NUM; i++){
         //如果鸟碰到了障碍物，就输
         //mogu的  x:Middle  y:mogu_posi_y
-        if(background_down_arr[i].x-JUMP_IMAGE_WIDTH < CANVAS_WIDTH/2 && background_down_arr[i].x+JUMP_IMAGE_WIDTH > CANVAS_WIDTH/2){
+        if(background_down_arr[i].x < CANVAS_WIDTH/2+JUMP_IMAGE_WIDTH/2
+            && background_down_arr[i].x > (CANVAS_WIDTH/2-JUMP_IMAGE_WIDTH/2-BACKGROUND_PER_WIDTH)){
+        //if(background_down_arr[i].x < (CANVAS_WIDTH/2-JUMP_IMAGE_WIDTH/2) && background_down_arr[i].x+BACKGROUND_PER_WIDTH > (CANVAS_WIDTH/2+JUMP_IMAGE_WIDTH/2)){
             if(mogu_posi_y<=background_up_arr[i].h
             || mogu_posi_y+JUMP_IMAGE_HEIGHT>=(CANVAS_HEIGHT-background_down_arr[i].h)){
                 gameStatus = 1;
@@ -105,9 +111,17 @@ var gameReset = function(){
     gameStatus = 0;
 }
 
-//画背景障碍物 (TODO:这个方法里面有报错？妈的完成了再改吧）
+var gamePause = function(){
+    gameStatus = 2;
+}
+
+//画背景障碍物
 var drawBackground = function(){
     for(var i=0; i<CANVAS_TOTAL_BACKGROUD_NUM; i++){
+        //修复代码报错：打印的时候，可能第一个还没有值
+        if(typeof background_down_arr[i] == undefined || background_up_arr[i] == undefined){
+            continue;
+        }
         //画上面的障碍物
         ctx.fillStyle = BACKGROUND_DEFAULT_COLOR;
         ctx.strokeStyle = BACKGROUND_DEFAULT_COLOR;
@@ -160,19 +174,53 @@ setInterval(main, 1000/FPS);
 var keyUp = function(e) {
     var currKey=0,e=e||event;
     currKey=e.keyCode||e.which||e.charCode;
-    if(currKey == 32){
-        speed += (speed>0)?JUMP_ONCE_HEIGHT/2:JUMP_ONCE_HEIGHT;
-        //alert("e.keyCode:"+e.keyCode+";e.which:"+e.which+";e.charCode:"+e.charCode);
+    console.log("按钮点击："+currKey);
+    switch (currKey){
+        case 32:
+            speed += (speed>0)?JUMP_ONCE_HEIGHT/2:JUMP_ONCE_HEIGHT;
+            break;
+        case 82:
+            if(gameStatus==1){
+                gameReset();
+            }
+            break;
+        case 80:
+            if(gameStatus==0){
+                gameStatus = 2;
+            }
+            break;
+        case 67:
+            if(gameStatus == 2){
+                gameStatus = 0;
+            }
+        default :
+            //console.log(currKey);
+            break;
     }
+    //if(currKey == 32){
+    //    speed += (speed>0)?JUMP_ONCE_HEIGHT/2:JUMP_ONCE_HEIGHT;
+    //    //alert("e.keyCode:"+e.keyCode+";e.which:"+e.which+";e.charCode:"+e.charCode);
+    //}
     //var keyName = String.fromCharCode(currKey);
     //alert("按键码: " + currKey + " 字符: "+ keyName);
 
     //如果现在是游戏结束状态，点R键盘reset
-    if(gameStatus==1){
-        if(currKey == 82){
-            gameReset();
-        }
-    }
+    //if(gameStatus==1){
+    //    if(currKey == 82){
+    //        gameReset();
+    //    }
+    //}
+
+    //如果是游戏状态，点P按键，游戏暂停
+    //if(currKey == 80){
+    //    if(gameStatus==0){
+    //        gameStatus = 2;
+    //    }
+    //    if(gameStatus == 2){
+    //        gameStatus = 0;
+    //    }
+    //}
+
 }
 document.onkeyup = keyUp;
 
