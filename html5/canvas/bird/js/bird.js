@@ -15,12 +15,13 @@ var CANVAS_TOTAL_BACKGROUD_NUM = 4;//一个场景最多几个障碍物
 var BACKGROUND_DEFAULT_COLOR = "#467500";
 var SCORE_NUMBER_PER = 100;//分数每次增加多少
 
+//游戏运行中的变量数据
 var JUMP_ALWAYS_LEFT = CANVAS_WIDTH/2-JUMP_IMAGE_WIDTH/2;
 var mogu_posi_y = JUMP_IMAGE_CURRENT_HEIGHT;
 var speed = 0;//positive:up   negative:down
 var background_up_arr = [];//上面障碍物数组
 var background_down_arr = [];//下面障碍物数组
-var gameStatus = 0;// 0正在游戏中；1游戏结束；    2暂停（TODO 暂停）
+var gameStatus = 0;// 0正在游戏中；1游戏结束；    2暂停（p）
 var currentScore = 0;//目前分数
 
 var canvas = document.getElementById("canvas");

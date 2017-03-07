@@ -17,7 +17,8 @@ $time_start = time();
 set_time_limit(0);
 ob_end_clean();
 echo str_pad('', 2048);
-$url = "http://wanimal1983.tumblr.com";
+#$url = "http://wanimal1983.tumblr.com";
+$url = "http://wanimal1983.org";
 
 for($i=(int)START;$i<(int)(START+STEP);$i++){
 
@@ -33,8 +34,10 @@ for($i=(int)START;$i<(int)(START+STEP);$i++){
         exit();
     }
 
-    $html = new simple_html_dom();
-    $html->load_file($target_url);
+    $html = new simple_html_dom($target_url);
+    $html->load($target_url);
+    var_dump($html->find('img'));exit;
+    #$html->load_file($target_url);
     if(!$html || empty($html)){continue;}
     unset($target_url);
     $time_load = time();
@@ -47,6 +50,7 @@ for($i=(int)START;$i<(int)(START+STEP);$i++){
 
     // 查找图片
     $images = array();
+    print_r($html->find('img'));exit;
     foreach($html->find('img') as $key => $post)
     {
         if(strpos($post->src,'media.tumblr.com')){
