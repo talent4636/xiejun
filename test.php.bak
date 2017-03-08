@@ -1,0 +1,25 @@
+<?php
+
+/*$array = array(
+        512=>10,
+        3<<10=>10,
+        8<<10=>10,
+        20<<10=>4,
+        30<<10=>2,
+        50<<10=>2,
+        80<<10=>2,
+        96<<10=>2,
+        128<<10=>2,
+        224<<10=>2,
+        256<<10=>2,
+        512<<10=>1,
+        1024<<10=>1,
+        );
+
+print_r($array);*/
+
+
+$jsonEncode = '{"type":"3","outer_orderid":"201611041210002082","order_sum":100,"province":"\\u5317\\u4eac","city":"\\u5317\\u4eac\\u5e02","district":"\\u4e1c\\u57ce\\u533a","address":"Pudong,Shanghai,China","name":"test","identity_no":"6225698585857447","identity_name":"\\u5f20\\u4e09","mobile":"15212121212","postcode":"123456","remark":"","freight":0,"exp_code":"EMS","add_time":"2016-11-04","order_pro":[{"outer_no":"1611040000011","sku":"test01","name":"\\u6d4b\\u8bd5\\u5546\\u54c1","unit":"","num":"1","price":100,"total":100}]}';
+var_dump(preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $jsonEncode););
+
+?>
