@@ -22,7 +22,9 @@ var main_logi = {
     },
     'init': function(){
         baseData.line();
+        baseData.cheeses();
         canvas.width = CANVAS_TOTAL_WIDTH;
         canvas.height = CANVAS_TOTAL_HEIGHT;
+        draw.table();
     }
 }
