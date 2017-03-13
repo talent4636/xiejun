@@ -57,14 +57,14 @@ var baseData = {
     'line': function(){
         for(var i=1; i<=9; i++){//竖线
             if(i==1 || i==9){
-                lineArr.push({begin:{w:i,h:1},end:{w:i,h:10},type:"nornal"});
+                lineArr.push({begin:{w:i,h:1},end:{w:i,h:10},type:"normal"});
             }else{
-                lineArr.push({begin:{w:i,h:1},end:{w:i,h:5},type:"nornal"});
-                lineArr.push({begin:{w:i,h:6},end:{w:i,h:10},type:"nornal"});
+                lineArr.push({begin:{w:i,h:1},end:{w:i,h:5},type:"normal"});
+                lineArr.push({begin:{w:i,h:6},end:{w:i,h:10},type:"normal"});
             }
         }
         for(var j=1; j<=10; j++){//横线
-            lineArr.push({begin:{w:1,h:j},end:{w:9,h:j},type:"nornal"});
+            lineArr.push({begin:{w:1,h:j},end:{w:9,h:j},type:"normal"});
         }
         //虚线 象路
         lineArr.push({begin:{w:1,h:3},end:{w:3,h:1},type:"dash"});
@@ -80,10 +80,10 @@ var baseData = {
         lineArr.push({begin:{w:3,h:6},end:{w:7,h:10},type:"dash"});
         lineArr.push({begin:{w:3,h:10},end:{w:7,h:6},type:"dash"});
         //虚线 士路
-        lineArr.push({begin:{w:4,h:1},end:{w:6,h:3},type:"dash"});
-        lineArr.push({begin:{w:4,h:3},end:{w:6,h:1},type:"dash"});
-        lineArr.push({begin:{w:4,h:8},end:{w:6,h:10},type:"dash"});
-        lineArr.push({begin:{w:4,h:10},end:{w:6,h:8},type:"dash"});
+        lineArr.push({begin:{w:4,h:1},end:{w:6,h:3},type:"normal"});
+        lineArr.push({begin:{w:4,h:3},end:{w:6,h:1},type:"normal"});
+        lineArr.push({begin:{w:4,h:8},end:{w:6,h:10},type:"normal"});
+        lineArr.push({begin:{w:4,h:10},end:{w:6,h:8},type:"normal"});
     },
     // 'mark': function(){
     //     //

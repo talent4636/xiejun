@@ -29,7 +29,7 @@ var draw = {
             //实心圆
             // console.log(item);
             ctx.beginPath();
-            ctx.fillStyle = CHEESE_BACKGROUND_COLOR;
+            ctx.fillStyle = item.select?"#000000":CHEESE_BACKGROUND_COLOR;
             ctx.arc(
                 baseData.getRealPosition(item.locate.w, item.locate.h).x,
                 baseData.getRealPosition(item.locate.w, item.locate.h).y,
