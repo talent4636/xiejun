@@ -3,6 +3,7 @@
  */
 var draw = {
     'table': function() {
+        ctx.clearRect(0,0,CANVAS_TOTAL_WIDTH,CANVAS_TOTAL_HEIGHT);
         //画棋盘
         lineArr.forEach(function (item, index) {
             ctx.moveTo(
@@ -19,6 +20,7 @@ var draw = {
                 ctx.setLineDash([5,5,5]);
             }else{
                 ctx.strokeStyle = TABLE_LINE_COLOR;
+                //ctx.setLineDash();
             }
             ctx.fill();
             ctx.stroke();
@@ -45,17 +47,27 @@ var draw = {
             ctx.fillText(
                 item.name,
                 baseData.getRealPosition(item.locate.w, item.locate.h).x-CHEESE_WORD_SIZE/2,
-                baseData.getRealPosition(item.locate.w, item.locate.h).y+CHEESE_WORD_SIZE/2-6
+                baseData.getRealPosition(item.locate.w, item.locate.h).y+CHEESE_WORD_SIZE/2-3
             );
         });
-
-    }
-    ,
+    },
+    'infoTable': function(){
+        draw.timer();
+        draw.tips();
+        draw.score();
+        draw.player();
+    },
+    'player': function(){
+        //头像
+        //用户名
+    },
     'cheeses': function(){
         //
     },
     'timer': function(){
-        //
+        //自然时间
+        //局时
+        //玩家步时总和
     },
     'score': function(){
         //

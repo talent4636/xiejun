@@ -9,39 +9,41 @@ var baseData = {
     },
     'cheeses': function(){
         //red
-        cheeseArr.push({name:"车",color:"red",locate:{w:1,h:1},type:"che",select:false});
-        cheeseArr.push({name:"马",color:"red",locate:{w:2,h:1},type:"ma",select:false});
-        cheeseArr.push({name:"相",color:"red",locate:{w:3,h:1},type:"xiang",select:false});
-        cheeseArr.push({name:"士",color:"red",locate:{w:4,h:1},type:"shi",select:false});
-        cheeseArr.push({name:"帅",color:"red",locate:{w:5,h:1},type:"jiang",select:false});
-        cheeseArr.push({name:"士",color:"red",locate:{w:6,h:1},type:"shi",select:false});
-        cheeseArr.push({name:"相",color:"red",locate:{w:7,h:1},type:"xiang",select:false});
-        cheeseArr.push({name:"马",color:"red",locate:{w:8,h:1},type:"ma",select:false});
-        cheeseArr.push({name:"车",color:"red",locate:{w:9,h:1},type:"che",select:false});
-        cheeseArr.push({name:"炮",color:"red",locate:{w:2,h:3},type:"pao",select:false});
-        cheeseArr.push({name:"炮",color:"red",locate:{w:8,h:3},type:"pao",select:false});
-        cheeseArr.push({name:"兵",color:"red",locate:{w:1,h:4},type:"bing",select:false});
-        cheeseArr.push({name:"兵",color:"red",locate:{w:3,h:4},type:"bing",select:false});
-        cheeseArr.push({name:"兵",color:"red",locate:{w:5,h:4},type:"bing",select:false});
-        cheeseArr.push({name:"兵",color:"red",locate:{w:7,h:4},type:"bing",select:false});
-        cheeseArr.push({name:"兵",color:"red",locate:{w:9,h:4},type:"bing",select:false});
+        var color_top = ARE_U_RED?"black":"red";
+        cheeseArr.push({name:"车",color:color_top,locate:{w:1,h:1},type:"che",select:false});
+        cheeseArr.push({name:"马",color:color_top,locate:{w:2,h:1},type:"ma",select:false});
+        cheeseArr.push({name:"相",color:color_top,locate:{w:3,h:1},type:"xiang",select:false});
+        cheeseArr.push({name:"士",color:color_top,locate:{w:4,h:1},type:"shi",select:false});
+        cheeseArr.push({name:"帅",color:color_top,locate:{w:5,h:1},type:"jiang",select:false});
+        cheeseArr.push({name:"士",color:color_top,locate:{w:6,h:1},type:"shi",select:false});
+        cheeseArr.push({name:"相",color:color_top,locate:{w:7,h:1},type:"xiang",select:false});
+        cheeseArr.push({name:"马",color:color_top,locate:{w:8,h:1},type:"ma",select:false});
+        cheeseArr.push({name:"车",color:color_top,locate:{w:9,h:1},type:"che",select:false});
+        cheeseArr.push({name:"炮",color:color_top,locate:{w:2,h:3},type:"pao",select:false});
+        cheeseArr.push({name:"炮",color:color_top,locate:{w:8,h:3},type:"pao",select:false});
+        cheeseArr.push({name:"兵",color:color_top,locate:{w:1,h:4},type:"bing",select:false});
+        cheeseArr.push({name:"兵",color:color_top,locate:{w:3,h:4},type:"bing",select:false});
+        cheeseArr.push({name:"兵",color:color_top,locate:{w:5,h:4},type:"bing",select:false});
+        cheeseArr.push({name:"兵",color:color_top,locate:{w:7,h:4},type:"bing",select:false});
+        cheeseArr.push({name:"兵",color:color_top,locate:{w:9,h:4},type:"bing",select:false});
         //black
-        cheeseArr.push({name:"車",color:"black",locate:{w:1,h:10},type:"che",select:false});
-        cheeseArr.push({name:"馬",color:"black",locate:{w:2,h:10},type:"ma",select:false});
-        cheeseArr.push({name:"象",color:"black",locate:{w:3,h:10},type:"xiang",select:false});
-        cheeseArr.push({name:"仕",color:"black",locate:{w:4,h:10},type:"shi",select:false});
-        cheeseArr.push({name:"将",color:"black",locate:{w:5,h:10},type:"jiang",select:false});
-        cheeseArr.push({name:"仕",color:"black",locate:{w:6,h:10},type:"shi",select:false});
-        cheeseArr.push({name:"象",color:"black",locate:{w:7,h:10},type:"xiang",select:false});
-        cheeseArr.push({name:"馬",color:"black",locate:{w:8,h:10},type:"ma",select:false});
-        cheeseArr.push({name:"車",color:"black",locate:{w:9,h:10},type:"che",select:false});
-        cheeseArr.push({name:"炮",color:"black",locate:{w:2,h:8},type:"pao",select:false});
-        cheeseArr.push({name:"炮",color:"black",locate:{w:8,h:8},type:"pao",select:false});
-        cheeseArr.push({name:"卒",color:"black",locate:{w:1,h:7},type:"bing",select:false});
-        cheeseArr.push({name:"卒",color:"black",locate:{w:3,h:7},type:"bing",select:false});
-        cheeseArr.push({name:"卒",color:"black",locate:{w:5,h:7},type:"bing",select:false});
-        cheeseArr.push({name:"卒",color:"black",locate:{w:7,h:7},type:"bing",select:false});
-        cheeseArr.push({name:"卒",color:"black",locate:{w:9,h:7},type:"bing",select:false});
+        var color_bottom = color_top=="red"?"blue":"red";
+        cheeseArr.push({name:"車",color:color_bottom,locate:{w:1,h:10},type:"che",select:false});
+        cheeseArr.push({name:"馬",color:color_bottom,locate:{w:2,h:10},type:"ma",select:false});
+        cheeseArr.push({name:"象",color:color_bottom,locate:{w:3,h:10},type:"xiang",select:false});
+        cheeseArr.push({name:"仕",color:color_bottom,locate:{w:4,h:10},type:"shi",select:false});
+        cheeseArr.push({name:"将",color:color_bottom,locate:{w:5,h:10},type:"jiang",select:false});
+        cheeseArr.push({name:"仕",color:color_bottom,locate:{w:6,h:10},type:"shi",select:false});
+        cheeseArr.push({name:"象",color:color_bottom,locate:{w:7,h:10},type:"xiang",select:false});
+        cheeseArr.push({name:"馬",color:color_bottom,locate:{w:8,h:10},type:"ma",select:false});
+        cheeseArr.push({name:"車",color:color_bottom,locate:{w:9,h:10},type:"che",select:false});
+        cheeseArr.push({name:"炮",color:color_bottom,locate:{w:2,h:8},type:"pao",select:false});
+        cheeseArr.push({name:"炮",color:color_bottom,locate:{w:8,h:8},type:"pao",select:false});
+        cheeseArr.push({name:"卒",color:color_bottom,locate:{w:1,h:7},type:"bing",select:false});
+        cheeseArr.push({name:"卒",color:color_bottom,locate:{w:3,h:7},type:"bing",select:false});
+        cheeseArr.push({name:"卒",color:color_bottom,locate:{w:5,h:7},type:"bing",select:false});
+        cheeseArr.push({name:"卒",color:color_bottom,locate:{w:7,h:7},type:"bing",select:false});
+        cheeseArr.push({name:"卒",color:color_bottom,locate:{w:9,h:7},type:"bing",select:false});
     },
     'point': function(){
         for(var i=1; i<=9; i++){

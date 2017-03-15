@@ -19,7 +19,8 @@ var CHEESE_R = EVERY_BOX_WIDTH/2-5;//棋子的半径
 var CHEESE_WORD_SIZE = CHEESE_R*1.5;//棋子上的字的size
 var CANVAS_TOTAL_WIDTH = 550;
 var CANVAS_TOTAL_HEIGHT = 500;
-var DEBUG_MODE = false;//调试模式，控制台会打印很多log
+var DEBUG_MODE = true;//调试模式，控制台会打印很多log
+var ARE_U_RED = true;
 //=============END CONFIG============
 
 //运行存储
@@ -41,12 +42,12 @@ var ctx = canvas.getContext('2d');
 //初始化
 main_logi.init();
 
-main_logi.select(1,1,'red');
+//main_logi.select(1,1,'red');
 
 draw.table();
 var main = function(){
     draw.table();
-    DEBUG_MODE?console.log(FOCUS_CHEESE_ITEM):'';
+    //DEBUG_MODE?console.log(FOCUS_CHEESE_ITEM):'';
 }
 
 setInterval(main,300);
