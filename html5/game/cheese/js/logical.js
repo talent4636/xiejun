@@ -2,10 +2,13 @@
  * Created by Administrator on 2017/3/8.
  */
 var main_logi = {
-    'canMove': function(){
-        //
+    //from:{x,y} to:{x,y}  cheese:{baseData里面的棋子}
+    'canMove': function(from,to,cheese){
+        //todo逻辑
+        return true;
     },
-    'move': function(){
+    //from:{x,y} to:{x,y}  cheese:{baseData里面的棋子}
+    'move': function(from,to,cheese){
         //
     },
     'is_win': function(){
@@ -32,9 +35,23 @@ var main_logi = {
             }
         );
         c.addEventListener(
-            'click', function(){
+            'click', function(e){
                 if(FOCUS_CHEESE_ITEM == 'false' || !FOCUS_CHEESE_ITEM){
                     //你点了个寂寞
+                    //如果现在有选中的棋，这么一点就是想要往这里走
+                    var toLocation = main_logi.getCheeseLocateByPosition(e);
+                    if(SELECTED_CHEESE!=false && SELECTED_CHEESE!=null){
+                        var _canMove = main_logi.canMove(
+                            {x:SELECTED_CHEESE.locate.w,y:SELECTED_CHEESE.locate.h},
+                            {x:toLocation.x,y:toLocation.y},
+                            SELECTED_CHEESE
+                        );
+                        if(!_canMove){
+                            SYSTEM_WARNING = "可以从这里走过去!";
+                        }else{
+                            SYSTEM_WARNING = "不能从这里走过去!";
+                        }
+                    }
                     return ;
                 }else{
                     if(CURRENT_PLAYER_COLOR != FOCUS_CHEESE_ITEM.color){
@@ -59,11 +76,29 @@ var main_logi = {
         cheeseArr.forEach(function(item, index){
             if(item.color!=user) return false;
             if(item.locate.w==a && item.locate.h==b){
-                cheeseArr[index].select = true;
+                if(cheeseArr[index].select == true){
+                    cheeseArr[index].select = false;
+                    SELECTED_CHEESE = false;
+                }else{
+                    cheeseArr[index].select = true;
+                    SELECTED_CHEESE = cheeseArr[index];
+                }
             }else{
                 cheeseArr[index].select = false;
             }
         });
+    },
+    //暂时不用
+    'cancelSelect':function(a,b,user){
+        cheeseArr.forEach(function(item, index){
+            if(item.locate.w==a && item.locate.h==b){
+                cheeseArr[index].select = false;
+            }
+            //SELECTED_CHEESE = false;
+        });
+    },
+    'anyCheeseSelected': function(){
+        //
     },
     //获取鼠标的位置
     'getMousePosition': function(e){
@@ -86,6 +121,21 @@ var main_logi = {
             }
         });
         return returnItem;
+    },
+    //根据鼠标坐标，得到大致的棋盘坐标
+    'getCheeseLocateByPosition':function(e){
+        var pos = main_logi.getMousePosition(e);
+        var returnLocate = false;
+        for(var i=1; i<9; i++){
+            for(var j=1; j<9; j++){
+                var realP = baseData.getRealPosition(i, j);
+                if((realP.x+CHEESE_R)>pos.x && (realP.x-CHEESE_R)<pos.x &&
+                    (realP.y+CHEESE_R)>pos.y && (realP.y-CHEESE_R)<pos.y){
+                    returnLocate = {x:i,y:j};
+                }
+            }
+        }
+        return returnLocate;
     },
     //红走了黑走，切换当前玩家
     'playerChange': function(){

@@ -17,7 +17,7 @@ var TABLE_LOCATION_MARGIN_X = 50;//棋盘的偏移x
 var TABLE_LOCATION_MARGIN_Y = 50;//棋盘的偏移y
 var CHEESE_R = EVERY_BOX_WIDTH/2-5;//棋子的半径
 var CHEESE_WORD_SIZE = CHEESE_R*1.5;//棋子上的字的size
-var CANVAS_TOTAL_WIDTH = 550;
+var CANVAS_TOTAL_WIDTH = 650;
 var CANVAS_TOTAL_HEIGHT = 500;
 var DEBUG_MODE = true;//调试模式，控制台会打印很多log
 var ARE_U_RED = true;
@@ -29,6 +29,8 @@ var lineArr = [];
 var cheeseArr = [];
 var FOCUS_CHEESE_ITEM = false;
 var CURRENT_PLAYER_COLOR = 'red';//红棋先走
+var SELECTED_CHEESE = null;
+var SYSTEM_WARNING = '';
 //END
 
 
@@ -47,6 +49,7 @@ main_logi.init();
 draw.table();
 var main = function(){
     draw.table();
+    draw.infoTable();
     //DEBUG_MODE?console.log(FOCUS_CHEESE_ITEM):'';
 }
 

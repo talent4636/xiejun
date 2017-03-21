@@ -6,6 +6,7 @@ var draw = {
         ctx.clearRect(0,0,CANVAS_TOTAL_WIDTH,CANVAS_TOTAL_HEIGHT);
         //画棋盘
         lineArr.forEach(function (item, index) {
+            ctx.beginPath();
             ctx.moveTo(
                 baseData.getRealPosition(item.begin.w,item.begin.h).x,
                 baseData.getRealPosition(item.begin.w,item.begin.h).y
@@ -17,13 +18,14 @@ var draw = {
             
             if(item.type == 'dash'){
                 ctx.strokeStyle = TABLE_LINE_DASH_COLOR;
-                ctx.setLineDash([5,5,5]);
+                ctx.setLineDash([5]);
             }else{
                 ctx.strokeStyle = TABLE_LINE_COLOR;
-                //ctx.setLineDash();
+                ctx.setLineDash([]);
             }
             ctx.fill();
             ctx.stroke();
+            ctx.closePath();
         });
         //楚河汉界 TODO
         //画子
@@ -52,10 +54,14 @@ var draw = {
         });
     },
     'infoTable': function(){
-        draw.timer();
-        draw.tips();
-        draw.score();
-        draw.player();
+        ctx.beginPath();
+        //draw.timer();
+        //draw.tips();
+        //draw.score();
+        //draw.player();
+        draw.info();
+        draw.warning();
+        ctx.closePath();
     },
     'player': function(){
         //头像
@@ -73,12 +79,34 @@ var draw = {
         //
     },
     'warning': function(){
-        //
+        var infoText = SYSTEM_WARNING?SYSTEM_WARNING:'nothing';
+        ctx.font = 15+"px Courier New";
+        ctx.fillStyle = "red";
+        ctx.fillText(
+            infoText,
+            baseData.getInfoPosition(10,0).x,
+            CANVAS_TOTAL_HEIGHT/2+20
+        );
     },
     'tips': function(){
         //
     },
     'on_active': function(){
         //
+    },
+    'info': function(){
+        var infoText = '';
+        if(CURRENT_PLAYER_COLOR == 'red'){
+            infoText = "红方走棋";
+        }else{
+            infoText = "黑方走棋";
+        }
+        ctx.font = CHEESE_WORD_SIZE+"px Courier New";
+        ctx.fillStyle = "red";
+        ctx.fillText(
+            infoText,
+            baseData.getInfoPosition(10,0).x,
+            CANVAS_TOTAL_HEIGHT/2
+        );
     }
 };

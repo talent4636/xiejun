@@ -69,23 +69,23 @@ var baseData = {
             lineArr.push({begin:{w:1,h:j},end:{w:9,h:j},type:"normal"});
         }
         //虚线 象路
-        lineArr.push({begin:{w:1,h:3},end:{w:3,h:1},type:"dash"});
-        lineArr.push({begin:{w:1,h:3},end:{w:3,h:5},type:"dash"});
-        lineArr.push({begin:{w:3,h:1},end:{w:7,h:5},type:"dash"});
-        lineArr.push({begin:{w:3,h:5},end:{w:7,h:1},type:"dash"});
-        lineArr.push({begin:{w:9,h:3},end:{w:7,h:1},type:"dash"});
-        lineArr.push({begin:{w:9,h:3},end:{w:7,h:5},type:"dash"});
-        lineArr.push({begin:{w:1,h:8},end:{w:3,h:6},type:"dash"});
-        lineArr.push({begin:{w:1,h:8},end:{w:3,h:10},type:"dash"});
-        lineArr.push({begin:{w:9,h:8},end:{w:7,h:6},type:"dash"});
-        lineArr.push({begin:{w:9,h:8},end:{w:7,h:10},type:"dash"});
-        lineArr.push({begin:{w:3,h:6},end:{w:7,h:10},type:"dash"});
-        lineArr.push({begin:{w:3,h:10},end:{w:7,h:6},type:"dash"});
+        lineArr.push({begin:{w:1,h:3},end:{w:3,h:1},type:"normal"});
+        lineArr.push({begin:{w:1,h:3},end:{w:3,h:5},type:"normal"});
+        lineArr.push({begin:{w:3,h:1},end:{w:7,h:5},type:"normal"});
+        lineArr.push({begin:{w:3,h:5},end:{w:7,h:1},type:"normal"});
+        lineArr.push({begin:{w:9,h:3},end:{w:7,h:1},type:"normal"});
+        lineArr.push({begin:{w:9,h:3},end:{w:7,h:5},type:"normal"});
+        lineArr.push({begin:{w:1,h:8},end:{w:3,h:6},type:"normal"});
+        lineArr.push({begin:{w:1,h:8},end:{w:3,h:10},type:"normal"});
+        lineArr.push({begin:{w:9,h:8},end:{w:7,h:6},type:"normal"});
+        lineArr.push({begin:{w:9,h:8},end:{w:7,h:10},type:"normal"});
+        lineArr.push({begin:{w:3,h:6},end:{w:7,h:10},type:"normal"});
+        lineArr.push({begin:{w:3,h:10},end:{w:7,h:6},type:"normal"});
         //虚线 士路
-        lineArr.push({begin:{w:4,h:1},end:{w:6,h:3},type:"normal"});
-        lineArr.push({begin:{w:4,h:3},end:{w:6,h:1},type:"normal"});
-        lineArr.push({begin:{w:4,h:8},end:{w:6,h:10},type:"normal"});
-        lineArr.push({begin:{w:4,h:10},end:{w:6,h:8},type:"normal"});
+        lineArr.push({begin:{w:4,h:1},end:{w:6,h:3},type:"dash"});
+        lineArr.push({begin:{w:4,h:3},end:{w:6,h:1},type:"dash"});
+        lineArr.push({begin:{w:4,h:8},end:{w:6,h:10},type:"dash"});
+        lineArr.push({begin:{w:4,h:10},end:{w:6,h:8},type:"dash"});
     },
     // 'mark': function(){
     //     //
@@ -95,5 +95,12 @@ var baseData = {
             x:(TABLE_LOCATION_MARGIN_X+(a-1)*EVERY_BOX_WIDTH),
             y:(TABLE_LOCATION_MARGIN_Y+(b-1)*EVERY_BOX_HEIGHT)
         };
+    },
+    //对信息面板的位置重新计算
+    'getInfoPosition': function(x,y){
+        var _leftTotalWitch = EVERY_BOX_WIDTH*8+TABLE_LOCATION_MARGIN_X*2;
+        var _topTotalHeight = TABLE_LOCATION_MARGIN_Y;
+        var location = {x: (_leftTotalWitch+x), y:(_topTotalHeight+y)};
+        return location;
     }
 }
